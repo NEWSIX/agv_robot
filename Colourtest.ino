@@ -1,48 +1,69 @@
-#define S0 2
-#define S1 3
-#define S2 4
-#define S3 5
-#define Pinout 8
-int frequency = 0;
-void setup() {
- pinMode(S0, OUTPUT);
- pinMode(S1, OUTPUT);
- pinMode(S2, OUTPUT);
- pinMode(S3, OUTPUT);
- pinMode(Pinout, INPUT);
+const int s0 = 2;  
+const int s1 = 3;  
+const int s2 = 4;  
+const int s3 = 5;  
+const int out = 8;   
 
- digitalWrite(S0,HIGH);
- digitalWrite(S1,HIGH);
- Serial.begin(9600);
-}
+// Variables  
+int red = 0;  
+int green = 0;  
+int blue = 0;  
+    
+void setup()   
+{  
+  Serial.begin(9600); 
+  pinMode(s0, OUTPUT);  
+  pinMode(s1, OUTPUT);  
+  pinMode(s2, OUTPUT);  
+  pinMode(s3, OUTPUT);  
+  pinMode(out, INPUT);  
+  digitalWrite(s0, HIGH);  
+  digitalWrite(s1, HIGH);  
+}  
+    
+void loop() 
+{  
+  color(); 
+  Serial.print("R Intensity:");  
+  Serial.print(red, DEC);  
+  Serial.print(" G Intensity: ");  
+  Serial.print(green, DEC);  
+  Serial.print(" B Intensity : ");  
+  Serial.print(blue, DEC);  
+  //Serial.println();  
 
-void loop() {
- digitalWrite(S2,LOW);
- digitalWrite(S3,LOW);
- frequency = pulseIn(Pinout,LOW);
- frequency = map (frequency, 25,70, 255, 0);
- Serial.print("R= ");
- Serial.print(frequency);
- Serial.print(" ");
- delay(100);
+  if (red < blue && red < green && red > 20)
+  {  
+   Serial.println(" - (Red Color)");    
+  }  
 
- digitalWrite(S2,HIGH);
- digitalWrite(S3,HIGH);
- frequency = pulseIn(Pinout,LOW);
- frequency = map(frequency, 30,90,255,0);
- Serial.print("G= ");
- Serial.print(frequency);
- Serial.print(" ");
- delay(100);
- 
- digitalWrite(S2,LOW);
- digitalWrite(S3,HIGH);
- frequency = pulseIn(Pinout,LOW);
- frequency = map(frequency, 25,70,255,0);
- Serial.print("B= ");
- Serial.print(frequency);
- Serial.println(" ");
- delay(100);
+  else if (blue < red && blue < green)   
+  {  
+   Serial.println(" - (Blue Color)");  
+  }  
 
+  else if (green < red && green < blue)  
+  {  
+   Serial.println(" - (Green Color)");  
 
+  }  
+  else{
+  Serial.println();  
+  }
+  delay(300);   
+
+ }  
+    
+void color()  
+{    
+  digitalWrite(s2, LOW);  
+  digitalWrite(s3, LOW);  
+  //count OUT, pRed, RED  
+  red = pulseIn(out, digitalRead(out) == LOW ? LOW : HIGH);  
+  digitalWrite(s3, HIGH);  
+  //count OUT, pBLUE, BLUE  
+  blue = pulseIn(out, digitalRead(out) == LOW ? HIGH : HIGH);  
+  digitalWrite(s2, HIGH);  
+  //count OUT, pGreen, GREEN  
+  green = pulseIn(out, digitalRead(out) == HIGH ? HIGH : HIGH);  
 }
