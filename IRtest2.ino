@@ -9,8 +9,6 @@ void loop() {
     Serial.println("Empty");
     delay(500);
   }
-    (digitalRead(outpin) == 0);{
     Serial.println("NO-Empty");
     delay(500);
-    }
 }
