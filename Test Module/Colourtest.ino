@@ -7,7 +7,8 @@ const int out = 8;
 // Variables  
 int red = 0;  
 int green = 0;  
-int blue = 0;  
+int blue = 0;
+int yellow = 0;  
     
 void setup()   
 {  
@@ -25,7 +26,9 @@ void loop()
 {  
   color(); 
   Serial.print("R Intensity:");  
-  Serial.print(red, DEC);  
+  Serial.print(red, DEC);
+  Serial.print(" Y Intensity : ");  
+  Serial.print(yellow, DEC);   
   Serial.print(" G Intensity: ");  
   Serial.print(green, DEC);  
   Serial.print(" B Intensity : ");  
@@ -35,6 +38,10 @@ void loop()
   if (red < blue && red < green && red > 20)
   {  
    Serial.println(" - (Red Color)");    
+  }  
+  else if (blue < red && green > blue)   
+  {  
+   Serial.println(" - (Yellow Color)");  
   }  
 
   else if (blue < red && blue < green)   
@@ -65,5 +72,6 @@ void color()
   blue = pulseIn(out, digitalRead(out) == LOW ? HIGH : HIGH);  
   digitalWrite(s2, HIGH);  
   //count OUT, pGreen, GREEN  
-  green = pulseIn(out, digitalRead(out) == HIGH ? HIGH : HIGH);  
+  green = pulseIn(out, digitalRead(out) == HIGH ? HIGH : HIGH); 
+  yellow = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
 }
