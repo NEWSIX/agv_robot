@@ -69,4 +69,5 @@ void compare()
   else{
   Serial.println(" IDK!");  
   }
+  delay(1000); 
 }
