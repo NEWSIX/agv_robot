@@ -2,11 +2,10 @@
 char key = '0' ;  
 Servo servo_test;                 
 int angle = 0; 
-int Buzzer = 4;
-int LED = 3;
+int Buzzer = 31;
 
-const int trigPin = 9;
-const int echoPin = 10;
+const int trigPin = 36;
+const int echoPin = 38;
 long duration;
 int distance;
    
@@ -14,9 +13,8 @@ int distance;
 void setup() 
 {
   Serial.begin(9600);
-  servo_test.attach(2);
+  servo_test.attach(10);
   pinMode(Buzzer, OUTPUT);
-  pinMode(LED, OUTPUT);
   pinMode(trigPin, OUTPUT); 
   pinMode(echoPin, INPUT);
  
@@ -42,14 +40,15 @@ void Ultrasonic()
   for (int i = 0; i < 2; i++) 
    {
     digitalWrite(Buzzer,LOW);
-    digitalWrite(LED,HIGH);
     delay(50);
     digitalWrite(Buzzer,HIGH);
-    digitalWrite(LED,LOW);
     delay(50);
    }  
  }
+   else  
+    Mode();
 }
+
 
 void Mode()
 {
@@ -75,10 +74,8 @@ void BuzzLED()
   for (int i = 0; i < 2; i++) 
    {
     digitalWrite(Buzzer,LOW);
-    digitalWrite(LED,HIGH);
     delay(100);
     digitalWrite(Buzzer,HIGH);
-    digitalWrite(LED,LOW);
     delay(50);
    }
   delay(1000);
