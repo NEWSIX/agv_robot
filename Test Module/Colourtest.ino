@@ -1,10 +1,8 @@
-const int s0 = 2;  
-const int s1 = 3;  
-const int s2 = 4;  
-const int s3 = 5;  
-const int out = 8;   
-
-// Variables  
+const int s0 = 51;  
+const int s1 = 49;  
+const int s2 = 45;  
+const int s3 = 47;  
+const int out = 43;   
 int red = 0;  
 int green = 0;  
 int blue = 0;
@@ -33,31 +31,8 @@ void loop()
   Serial.print(green, DEC);  
   Serial.print(" B Intensity : ");  
   Serial.print(blue, DEC);  
-  //Serial.println();  
-
-  if (red < blue && red < green && red > 20)
-  {  
-   Serial.println(" - (Red Color)");    
-  }  
-  else if (blue < red && green > blue)   
-  {  
-   Serial.println(" - (Yellow Color)");  
-  }  
-
-  else if (blue < red && blue < green)   
-  {  
-   Serial.println(" - (Blue Color)");  
-  }  
-
-  else if (green < red && green < blue)  
-  {  
-   Serial.println(" - (Green Color)");  
-
-  }  
-  else{
-  Serial.println();  
-  }
-  delay(300);   
+  compare();
+  delay(1000);   
 
  }  
     
@@ -65,13 +40,33 @@ void color()
 {    
   digitalWrite(s2, LOW);  
   digitalWrite(s3, LOW);  
-  //count OUT, pRed, RED  
   red = pulseIn(out, digitalRead(out) == LOW ? LOW : HIGH);  
   digitalWrite(s3, HIGH);  
-  //count OUT, pBLUE, BLUE  
   blue = pulseIn(out, digitalRead(out) == LOW ? HIGH : HIGH);  
   digitalWrite(s2, HIGH);  
-  //count OUT, pGreen, GREEN  
   green = pulseIn(out, digitalRead(out) == HIGH ? HIGH : HIGH); 
   yellow = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
+}
+void compare()
+{
+  if (red >= 12 && red <= 24 && yellow >= 6 && yellow <= 18 && green >= 7 && green <= 18 && blue >= 2 && blue <= 12)
+    {
+      Serial.println(" - (BLUEEEEEEE)");
+    }
+  else if (red >= 10 && red <= 20 && yellow >= 7 && yellow <= 16 && green >= 6 && green <= 16 && blue >= 10 && blue <= 19)
+    {
+      Serial.println(" - (GREENNNN)");
+    } 
+  else if (red >= 4 && red <= 11 && yellow >= 6 && yellow <= 14 && green >= 6 && green <= 14 && blue >= 8 && blue <= 18)
+    {
+      Serial.println(" - (YELLOOOOWWW)");
+    } 
+
+  else if (red >= 6 && red <= 15 && yellow >= 25 && yellow <= 35 && green >= 25 && green <= 35 && blue >= 18 && blue <= 28)
+    {
+      Serial.println(" - (REDDDDDDDDDDD)");
+    } 
+  else{
+  Serial.println(" IDK!");  
+  }
 }
