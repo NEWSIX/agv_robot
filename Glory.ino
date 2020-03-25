@@ -3,6 +3,8 @@
 
 AF_DCMotor motor1(3);
 AF_DCMotor motor2(4);
+
+Servo servo_test;
 /*------------------------PIN------------------------*/
 const int Buzzer = 31;
 const int trigPin = 36;
@@ -21,9 +23,8 @@ const int sensorPin4 = 42;
 const int sensorPin5 = 40;
 const int sensorPin6 = 22;
 /*---------------------------------------------------*/
-int red = 0 , green = 0 , blue = 0 , blue = 0 , yellow = 0; 
+int red = 0 , green = 0 , blue = 0 , yellow = 0; 
 int sensorValue0 = 0 ,sensorValue1=0 ,sensorValue2=0 ,sensorValue3=0 ,sensorValue4=0 ,sensorValue5=0 ,sensorValue6=0;
-
 long duration;
 int distance;
 int spd1 = 0 , spd2 = 0;
@@ -58,7 +59,7 @@ void setup()
 void loop() 
 {
     object();
-    inputDIGITAL()
+    inputDIGITAL();
     Ultrasonic();
 
 }
@@ -68,9 +69,11 @@ void object()
 {
     int OBJECT=digitalRead(Object_Sensor);
     if (OBJECT == 0)
+    {
         RGB_color();
         RGB_compare();
         stations();
+    }
     else 
         George();
 }
@@ -318,6 +321,7 @@ void BuzzLED()
   delay(1000);
 }
 
+int angle;
 void Servo_0()
 {
   for(angle = 90; angle>=1; angle--)  
