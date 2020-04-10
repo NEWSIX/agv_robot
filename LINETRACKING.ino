@@ -17,6 +17,7 @@ int sensorValue2 = 0;
 int sensorValue3 = 0;
 int sensorValue4 = 0;
 int sensorValue5 = 0;
+
 int sensorValue0 = 0;
 int sensorValue6 = 0;
 
@@ -27,6 +28,8 @@ void setup() {
   pinMode(INPUT, sensorPin3);
   pinMode(INPUT, sensorPin4);
   pinMode(INPUT, sensorPin5);
+  pinMode(INPUT, sensorPin0);
+  pinMode(INPUT, sensorPin6);
   Serial.begin(9600);
 }
 
@@ -36,7 +39,10 @@ void loop() {
 }
 
 void control() {
-  if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+  if ((sensorValue0 == 1) || (sensorValue6 == 1))
+    exampletest(); 
+  
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
     forward(1);
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
     forward(1);
@@ -66,8 +72,7 @@ void control() {
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 0))
     turnRight(1);
 
- else if ((sensorValue0 == 0) || (sensorValue6 == 0))
-    exampletest();    
+       
 
     
   else
@@ -82,7 +87,7 @@ void inputDIGITAL() {
   sensorValue5 = digitalRead(sensorPin5);
   sensorValue0 = digitalRead(sensorPin0);
   sensorValue6 = digitalRead(sensorPin6);
-  Serial.print("S1 = ");
+  /*Serial.print("S1 = ");
   Serial.print(sensorValue1);
   Serial.print(" ");
   Serial.print("S2 = ");
@@ -95,7 +100,7 @@ void inputDIGITAL() {
   Serial.print(sensorValue4);
   Serial.print(" ");
   Serial.print("S5 = ");
-  Serial.println(sensorValue5);
+  Serial.println(sensorValue5); */
 }
 void forward(int timedelay) {
   motor1.setSpeed(spd1);
@@ -117,15 +122,14 @@ void forward(int timedelay) {
   Serial.println("FORWARD");
 }
 void exampletest(){
-Serial.print("S0 = ");
+  Serial.print("LEFT = ");
   Serial.print(sensorValue0);
   Serial.print(" ");
-  Serial.print("S6 = ");
+  Serial.print("RIGHT = ");
   Serial.println(sensorValue6);
-  Serial.println(" **** ");
   motor1.run(RELEASE);  
   motor2.run(RELEASE);
-  delay (5000);
+  
   
 }
   void turnRight(int timedelay) {
