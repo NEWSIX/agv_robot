@@ -1,21 +1,24 @@
 #include<AFMotor.h>
-AF_DCMotor motor1(2);
-AF_DCMotor motor2(4);
+AF_DCMotor motor1(3);
+AF_DCMotor motor2(4); //right motor
 
 int spd1 = 120;
 int spd2 = 120;
-
-int sensorPin1 = 40;
-int sensorPin2 = 42;
-int sensorPin3 = 44;
-int sensorPin4 = 46;
-int sensorPin5 = 48;
+const int sensorPin0 = 52;
+const int sensorPin1 = 48;
+const int sensorPin2 = 46;
+const int sensorPin3 = 44;
+const int sensorPin4 = 42;
+const int sensorPin5 = 40;
+const int sensorPin6 = 22;
 
 int sensorValue1 = 0;
 int sensorValue2 = 0;
 int sensorValue3 = 0;
 int sensorValue4 = 0;
 int sensorValue5 = 0;
+int sensorValue0 = 0;
+int sensorValue6 = 0;
 
 void setup() {
 
@@ -35,10 +38,12 @@ void loop() {
 void control() {
   if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
     forward(1);
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 1))
-    turnRight(1);
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-    turnRight(1);
+    forward(1);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    forward(1);
+    
+  
   else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
     turnLeft(1);
   else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
@@ -47,10 +52,36 @@ void control() {
     turnLeft(1);
   else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
     turnLeft(1);
+  else if ((sensorValue1 == 0) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    turnLeft(1);
+    
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 1))
+    turnRight(1);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
+    turnRight(1);  
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 0))
     turnRight(1);
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 0))
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 0))
     turnRight(1);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 0))
+    turnRight(1);
+
+ else if ((sensorValue0 == 0) || (sensorValue6 == 0))
+ {
+  Serial.print("S0 = ");
+  Serial.print(sensorValue0);
+  Serial.print(" ");
+  Serial.print("S6 = ");
+  Serial.println(sensorValue6);
+  Serial.println(" **** ");
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  delay (5000);
+  forward(1);
+ }
+    
+
+    
   else
     backward(100);
 }
@@ -61,6 +92,8 @@ void inputDIGITAL() {
   sensorValue3 = digitalRead(sensorPin3);
   sensorValue4 = digitalRead(sensorPin4);
   sensorValue5 = digitalRead(sensorPin5);
+  sensorValue0 = digitalRead(sensorPin0);
+  sensorValue6 = digitalRead(sensorPin6);
   Serial.print("S1 = ");
   Serial.print(sensorValue1);
   Serial.print(" ");
@@ -97,39 +130,39 @@ void forward(int timedelay) {
 }
   void turnRight(int timedelay) {
     motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2);
+    motor2.setSpeed(spd2*1.25);
     motor1.run(FORWARD);
     motor2.run(RELEASE);
-    delay(100);
+    delay(70);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
     delay (10);
 
-    motor1.setSpeed(spd1*1.25);
+    motor1.setSpeed(spd1);
     motor2.setSpeed(spd2*1.25);
     motor1.run(FORWARD);
     motor2.run(RELEASE);
-    delay(100);
+    delay(50);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
    
     Serial.println("TURNRIGHT");
   }
   void turnLeft(int timedelay) {
-    motor1.setSpeed(spd1);
+    motor1.setSpeed(spd1*1.25);
     motor2.setSpeed(spd2);
     motor1.run(FORWARD);
     motor2.run(FORWARD);
-    delay(100);
+    delay(70);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
     delay (10);
 
     motor1.setSpeed(spd1*1.25);
-    motor2.setSpeed(spd2*1.25);
+    motor2.setSpeed(spd2);
     motor1.run(RELEASE);
     motor2.run(FORWARD);
-    delay(100);
+    delay(50);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
     delay (10);
@@ -141,7 +174,7 @@ void backward(int timedelay){
    motor2.setSpeed(100);
    motor1.run(BACKWARD);  
    motor2.run(BACKWARD); 
-   delay(80);
+   delay(50);
    motor1.run(RELEASE);  
    motor2.run(RELEASE);
    delay (10);
