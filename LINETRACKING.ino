@@ -67,19 +67,7 @@ void control() {
     turnRight(1);
 
  else if ((sensorValue0 == 0) || (sensorValue6 == 0))
- {
-  Serial.print("S0 = ");
-  Serial.print(sensorValue0);
-  Serial.print(" ");
-  Serial.print("S6 = ");
-  Serial.println(sensorValue6);
-  Serial.println(" **** ");
-  motor1.run(RELEASE);  
-  motor2.run(RELEASE);
-  delay (5000);
-  forward(1);
- }
-    
+    exampletest();    
 
     
   else
@@ -127,6 +115,18 @@ void forward(int timedelay) {
   motor2.run(RELEASE);
   delay(100);
   Serial.println("FORWARD");
+}
+void exampletest(){
+Serial.print("S0 = ");
+  Serial.print(sensorValue0);
+  Serial.print(" ");
+  Serial.print("S6 = ");
+  Serial.println(sensorValue6);
+  Serial.println(" **** ");
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  delay (5000);
+  
 }
   void turnRight(int timedelay) {
     motor1.setSpeed(spd1);
