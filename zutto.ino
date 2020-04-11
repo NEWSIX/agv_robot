@@ -152,20 +152,7 @@ void inputDIGITAL() {
   sensorValue5 = digitalRead(sensorPin5);
   sensorValue0 = digitalRead(sensorPin0);
   sensorValue6 = digitalRead(sensorPin6);
-  /*Serial.print("S1 = ");
-  Serial.print(sensorValue1);
-  Serial.print(" ");
-  Serial.print("S2 = ");
-  Serial.print(sensorValue2);
-  Serial.print(" ");
-  Serial.print("S3 = ");
-  Serial.print(sensorValue3);
-  Serial.print(" ");
-  Serial.print("S4 = ");
-  Serial.print(sensorValue4);
-  Serial.print(" ");
-  Serial.print("S5 = ");
-  Serial.println(sensorValue5); */
+
 }
 void forward(int timedelay) {
   motor1.setSpeed(spd1);
