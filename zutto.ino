@@ -111,27 +111,33 @@ void control(){
         }
         if(sensorValue6 == 1){
           station = station+1 ;
+          Serial.println(station);
+          
         }
 
 
         if(RGB>=1){
           if(RGB == 1 && station == 0){
             Serial.println(" STARTTO");  
+            Serial.println(station);
             delay(1000);
             forward(1000);
           }
           if(RGB == 2 && station == 1){
-            Serial.println(" Station : 1");  
+            Serial.println(" Station : 1");
+            Serial.println(station);  
             delay(1000);
             forward(1000);
           }
           if(RGB == 3 && station == 2){
             Serial.println(" Station : 2");  
+            Serial.println(station);
             delay(1000);
             forward(1000);
           }
           if(RGB == 4 && station == 3){
-            Serial.println(" Station : 3");  
+            Serial.println(" Station : 3"); 
+            Serial.println(station); 
             delay(1000);
             forward(1000);
           }
@@ -185,7 +191,6 @@ void inputDIGITAL() {
   sensorValue5 = digitalRead(sensorPin5);
   sensorValue0 = digitalRead(sensorPin0);
   sensorValue6 = digitalRead(sensorPin6);
-
 }
 void forward(int timedelay) {
   motor1.setSpeed(spd1);
