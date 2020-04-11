@@ -99,8 +99,10 @@ void RGB_Sensor()
    
 
 void control(){
-    RGB_Sensor();
+    inputDIGITAL();
+
     if ((sensorValue0 == 1) || (sensorValue6 == 1)){
+        RGB_Sensor();
         if(RGB>=1){
             Serial.println(" CONTROL _ RGB > 0 ");  
             delay(1000);
