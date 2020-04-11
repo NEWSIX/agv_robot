@@ -31,11 +31,6 @@ int green = 0;
 int blue = 0;
 int yellow = 0;  
 int RGB=0;
-int station=0;
-int times,a;
-int RGB_FUNCTION;
-
-int Object_Sensor = 33;
     
 void setup()   
 {  
@@ -97,125 +92,56 @@ void RGB_Sensor()
       Serial.println("COLOR IS : RED 4");
     } 
   else{
-  RGB = 0;
-  Serial.println(" IDK!");  
+    RGB = 0;
+    Serial.println(" IDK!");  
   }
   delay(1000); 
     }
 }
 /*----------------------------------------------------LINETRACKING-------------------------------------*/
    
-/*
-void check_station(){
-    while (Object_Sensor != 0 && times != 1000){ 
-        for (times = 0 ; times<= 1000 ; times+1){
-            times=times;
-            a=digitalRead(Object_Sensor);
-            if(a==1 || times==1000){
-            break;
-            }
-            delay(1);
-        }               
-    }
-} 
-*/
 
 void control() {
-     if ((sensorValue0 == 1) || (sensorValue6 == 1)){
-         RGB_Sensor();
-         if(RGB >= 1)
-         {
-            Serial.println("STATION STOP");
-            Serial.println(RGB);
-            Serial.println(sensorValue0);
-            delay(1000);
-         }
-     }
-
-    /*
-  if ((sensorValue0 == 1) || (sensorValue6 == 1)){ 
-      if(sensorValue0 == 1){
-          Serial.println("Station : Start");
-          RGB_FUNCTION = 0;
-      }
-      if(sensorValue6 == 1){
-          station = station+2;
-          if(station == 2 && RGB == 1){
-            Serial.println("Station : 1");
-          }
-          if(station == 4 && RGB == 2){
-            Serial.println("Station : 2");
-          }
-          if(station == 6 && RGB == 3){
-            Serial.println("Station : 3");
-          }
-      }
-*/
-      //stop motor
-     /*
-     if (sensorValue0==1){ // sensor left
-         station == 1; // start
-     }
-    if (sensorValue6==1){
-        station == station+2; // =2 station :1 || = 4 station:2 || = 6 station: 3
-
-        if (station == 2 && RGB == 1 )
-        {
-            //stop motor function ();
-            // Signal ();
-            delay(100);
-            check_station();
+    RGB_Sensor();
+    if ((sensorValue0 == 1) || (sensorValue6 == 1)){
+        if(RGB>=1){
+            Serial.println(" CONTROL _ RGB > 0 ");  
+            delay(1000;)
         }
-        if (station == 4 && RGB == 2 )
-        {
-            //stop motor function ();
-            // Signal ();
-            delay(100);
-            check_station();
-         }
-         if (station == 6 && RGB == 3 )
-         {
-            //stop motor function ();
-            // Signal ();
-            delay(100);
-            check_station();
-         }
-        forward(1);
-    }
-    */
+     }
   }
 
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    forward(1);
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-    forward(1);
-  else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    forward(1);
-  
-  else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    turnLeft(1);
-  else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    turnLeft(1);
-  else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    turnLeft(1);
-  else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    turnLeft(1);
-  else if ((sensorValue1 == 0) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    turnLeft(1);
-    
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 1))
-    turnRight(1);
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-    turnRight(1);  
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 0))
-    turnRight(1);
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 0))
-    turnRight(1);
-  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 0))
-    turnRight(1);
+    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+        forward(1);
+    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
+        forward(1);
+    else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+        forward(1);
 
-  else
-    backward(100);
+    else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
+        turnLeft(1);
+    else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+        turnLeft(1);
+    else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+        turnLeft(1);
+    else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
+        turnLeft(1);
+    else if ((sensorValue1 == 0) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
+        turnLeft(1);
+        
+    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 1))
+        turnRight(1);
+    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
+        turnRight(1);  
+    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 0))
+        turnRight(1);
+    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 0))
+        turnRight(1);
+    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 0))
+        turnRight(1);
+
+    else
+        backward(100);
 }
 
 void inputDIGITAL() {
