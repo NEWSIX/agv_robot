@@ -63,18 +63,13 @@ void setup()
     
 void loop() 
 {  
- 
- 
- control();
- station=0; // reset status station
+control();
 }  
 
 /*----------------------------------------------------RGB-------------------------------------*/
 
 void RGB_Sensor()
 { 
-    RGB_FUNCTION;
-    if(RGB_FUNCTION == 0){
   digitalWrite(s2, LOW);  
   digitalWrite(s3, LOW);  
   red = pulseIn(out, digitalRead(out) == LOW ? LOW : HIGH);  
@@ -102,12 +97,11 @@ void RGB_Sensor()
       Serial.println("COLOR IS : RED 4");
     } 
   else{
+  RGB = 0;
   Serial.println(" IDK!");  
   }
   delay(1000); 
     }
-   else{}
-   RGB_FUNCTION = 1;
 }
 /*----------------------------------------------------LINETRACKING-------------------------------------*/
    
@@ -129,11 +123,12 @@ void check_station(){
 void control() {
      if ((sensorValue0 == 1) || (sensorValue6 == 1)){
          RGB_Sensor();
-         if((sensorValue0 == 1) && RGB >= 1 )
+         if(RGB >= 1)
          {
             Serial.println("STATION STOP");
             Serial.println(RGB);
             Serial.println(sensorValue0);
+            delay(1000);
          }
      }
 
