@@ -44,8 +44,6 @@ void setup()
   pinMode(INPUT, sensorPin0);
   pinMode(INPUT, sensorPin6);
 
-  pinMode(INPUT,Object_Sensor);
-
   pinMode(s0, OUTPUT);  
   pinMode(s1, OUTPUT);  
   pinMode(s2, OUTPUT);  
@@ -97,19 +95,17 @@ void RGB_Sensor()
   }
   delay(1000); 
     }
-}
 /*----------------------------------------------------LINETRACKING-------------------------------------*/
    
 
-void control() {
+void control(){
     RGB_Sensor();
     if ((sensorValue0 == 1) || (sensorValue6 == 1)){
         if(RGB>=1){
             Serial.println(" CONTROL _ RGB > 0 ");  
-            delay(1000;)
+            delay(1000);
         }
      }
-  }
 
     else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
         forward(1);
