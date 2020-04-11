@@ -63,7 +63,7 @@ void setup()
     
 void loop() 
 {  
- RGB_Sensor();
+ 
  
  control();
  station=0; // reset status station
@@ -127,6 +127,17 @@ void check_station(){
 */
 
 void control() {
+     if ((sensorValue0 == 1) || (sensorValue6 == 1)){
+         RGB_Sensor();
+         if((sensorValue0 == 1) && RGB >= 1 )
+         {
+            Serial.println("STATION STOP");
+            Serial.println(RGB);
+            Serial.println(sensorValue0);
+         }
+     }
+
+    /*
   if ((sensorValue0 == 1) || (sensorValue6 == 1)){ 
       if(sensorValue0 == 1){
           Serial.println("Station : Start");
@@ -144,7 +155,7 @@ void control() {
             Serial.println("Station : 3");
           }
       }
-
+*/
       //stop motor
      /*
      if (sensorValue0==1){ // sensor left
