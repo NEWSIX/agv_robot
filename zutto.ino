@@ -2,8 +2,8 @@
 AF_DCMotor motor1(3);
 AF_DCMotor motor2(4); //right motor
 
-int spd1 = 120;
-int spd2 = 120;
+int spd1 = 130;
+int spd2 = 130;
 const int sensorPin0 = 52;
 const int sensorPin1 = 48;
 const int sensorPin2 = 46;
@@ -91,7 +91,8 @@ void RGB_Sensor()
     } 
   else{
     RGB = 0;
-    Serial.println(" IDK!");  
+    Serial.println(" IDK!"); 
+     
   }
   delay(1000); 
     }
@@ -106,6 +107,10 @@ void control(){
         if(RGB>=1){
             Serial.println(" CONTROL _ RGB > 0 ");  
             delay(1000);
+            forward(1000);
+        }
+        if(RGB<1){
+          forward(1);
         }
      }
 
