@@ -31,6 +31,8 @@ int green = 0;
 int blue = 0;
 int yellow = 0;  
 int RGB=0;
+
+int station;
     
 void setup()   
 {  
@@ -102,14 +104,42 @@ void RGB_Sensor()
 void control(){
     inputDIGITAL();
 
-    if ((sensorValue0 == 1) || (sensorValue6 == 1)){
+    if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
         RGB_Sensor();
+        if(sensorValue0 == 1){
+          station = 0 ; //reset at startto
+        }
+        if(sensorValue6 == 1){
+          station = station+1 ;
+        }
+
+
         if(RGB>=1){
-            Serial.println(" CONTROL _ RGB > 0 ");  
+          if(RGB == 1 && station == 0){
+            Serial.println(" STARTTO");  
             delay(1000);
             forward(1000);
+          }
+          if(RGB == 2 && station == 1){
+            Serial.println(" Station : 1");  
+            delay(1000);
+            forward(1000);
+          }
+          if(RGB == 3 && station == 2){
+            Serial.println(" Station : 2");  
+            delay(1000);
+            forward(1000);
+          }
+          if(RGB == 4 && station == 3){
+            Serial.println(" Station : 3");  
+            delay(1000);
+            forward(1000);
+          }
+            
+            
         }
         if(RGB<1){
+          Serial.println(" CONTROL _ RGB is 0 ");  
           forward(1);
         }
      }
