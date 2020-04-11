@@ -21,6 +21,8 @@ int sensorValue5 = 0;
 int sensorValue0 = 0;
 int sensorValue6 = 0;
 
+int Object_Sensor = 33;
+
 const int s0 = 51;  
 const int s1 = 49;  
 const int s2 = 45;  
@@ -32,11 +34,14 @@ int blue = 0;
 int yellow = 0;  
 int RGB=0;
 
-int station;
+int station = 0 ;
+int a;
     
 void setup()   
 {  
   Serial.begin(9600); 
+
+  pinMode(INPUT,Object_Sensor);
 
   pinMode(INPUT, sensorPin1);
   pinMode(INPUT, sensorPin2);
@@ -103,52 +108,52 @@ void RGB_Sensor()
 
 void control(){
     inputDIGITAL();
-
+    
     if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
-        RGB_Sensor();
-        if(sensorValue0 == 1){
-          station = 0 ; //reset at startto
-        }
-        if(sensorValue6 == 1){
-          station = station+1 ;
-          Serial.println(station);
-          
-        }
+      RGB_Sensor();
 
+      if(sensorValue0 == 1){ // left sensor
+        a=digitalRead(Object_Sensor);
+        Serial.println(a);
+        delay(50);
+        if(a==0){// object detected
+          forward(1000);
+        }
+      }
 
+      if(sensorValue6 == 1){ //right sensor
         if(RGB>=1){
           if(RGB == 1 && station == 0){
             Serial.println(" STARTTO");  
-            Serial.println(station);
             delay(1000);
             forward(1000);
+            station = 1;
           }
-          if(RGB == 2 && station == 1){
+          if(RGB == 2 && station == 1 ){
+            station = station+1;
             Serial.println(" Station : 1");
-            Serial.println(station);  
             delay(1000);
             forward(1000);
           }
-          if(RGB == 3 && station == 2){
-            Serial.println(" Station : 2");  
-            Serial.println(station);
+          if(RGB == 3 && station == 2 ){
+            station = station+1;
+            Serial.println(" Station : 2");
             delay(1000);
             forward(1000);
           }
-          if(RGB == 4 && station == 3){
+          if(RGB == 4 && station == 3 ){
+            station = 0;
             Serial.println(" Station : 3"); 
-            Serial.println(station); 
             delay(1000);
             forward(1000);
           }
-            
-            
-        }
+        }    
         if(RGB<1){
-          Serial.println(" CONTROL _ RGB is 0 ");  
+          Serial.println(" No Detected ");  
           forward(1);
         }
-     }
+      }
+    }
 
     else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
         forward(1);
@@ -182,6 +187,7 @@ void control(){
     else
         backward(100);
 }
+
 
 void inputDIGITAL() {
   sensorValue1 = digitalRead(sensorPin1);
