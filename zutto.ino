@@ -154,22 +154,22 @@ void control(){
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
-            forward(200);
+            forward(100);
             }
           if (a == 0){
             signal1();
             delay(5000); //w8 receive 5sec 
             signal2();
-            forward(200);
+            forward(100);
             }
           }
           else {
             signal2();
-            forward(200);
+            forward(100);
           }
         }
         if(a==1){// object non detected
-          forward(200);
+          forward(100);
         }
       }
 
@@ -235,11 +235,11 @@ void control(){
 
     */
     else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        forward(200);
+        forward(1);
     else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-        forward(200);
+        forward(1);
     else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        forward(200);
+        forward(1);
 
     else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
         turnLeft();
@@ -264,7 +264,7 @@ void control(){
         turnRight();
 
     else
-        backward(50);
+        backward();
 }
 
 
@@ -292,10 +292,10 @@ void forward(int timedelay)
     motor2.setSpeed(spd2*1.25);
     motor1.run(FORWARD);
     motor2.run(FORWARD);
-    delay (10);
+    delay(timedelay/2);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
-    delay(timedelay/2);
+    delay(timedelay);
 }
   void turnRight() {
     motor1.setSpeed(spd1);
