@@ -136,7 +136,7 @@ void control(){
             signal1();
             delay(5000);
             signal2();
-            forward(1000);
+            forward(200);
           }
         }
         if(a==1){// object non detected
@@ -154,22 +154,22 @@ void control(){
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
-            forward(1000);
+            forward(200);
             }
           if (a == 0){
             signal1();
             delay(5000); //w8 receive 5sec 
             signal2();
-            forward(1000);
+            forward(200);
             }
           }
           else {
             signal2();
-            forward(1000);
+            forward(200);
           }
         }
         if(a==1){// object non detected
-          forward(1000);
+          forward(200);
         }
       }
 
@@ -182,22 +182,22 @@ void control(){
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
-            forward(1000);
+            forward(200);
             }
           if (a == 0){
             signal1();
             delay(5000); //w8 receive 5sec 
             signal2();
-            forward(1000);
+            forward(200);
             }
           }
           else {
             signal2();
-            forward(1000);
+            forward(200);
           }
         }
         if(a==1){// object non detected
-          forward(1000);
+          forward(200);
         }
       }
 
@@ -353,7 +353,7 @@ void backward(int timedelay){
 
 /*----------------------------------------------------Signal-------------------------------------*/
 
-int angle;
+int angle=0;
 
 void signal1(){
 BuzzLED();
