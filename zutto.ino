@@ -37,6 +37,7 @@ int RGB=0;
 int a;
 
 const int Buzzer = 31;
+Servo servo_test;
 
 const int trigPin = 36;
 const int echoPin = 38;
