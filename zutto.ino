@@ -123,26 +123,23 @@ void control(){
 
       if(sensorValue6 == 1){ //right sensor
         if(RGB>=1){
-          if(RGB == 1 && station == 0){
+          if(RGB == 1 ){
             Serial.println(" STARTTO");  
             delay(1000);
             forward(1000);
             station = 1;
           }
-          if(RGB == 2 && station == 1 ){
-            station = station+1;
+          if(RGB == 2 ){
             Serial.println(" Station : 1");
             delay(1000);
             forward(1000);
           }
-          if(RGB == 3 && station == 2 ){
-            station = station+1;
+          if(RGB == 3){
             Serial.println(" Station : 2");
             delay(1000);
             forward(1000);
           }
-          if(RGB == 4 && station == 3 ){
-            station = 0;
+          if(RGB == 4){
             Serial.println(" Station : 3"); 
             delay(1000);
             forward(1000);
