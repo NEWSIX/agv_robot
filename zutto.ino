@@ -39,7 +39,7 @@ int RGB=0;
 
 int a;
 
-const int Buzzer = 31;
+const int Buzzer ;//31
 
 const int trigPin = 36;
 const int echoPin = 38;
@@ -303,7 +303,7 @@ void forward(int timedelay)
     motor2.setSpeed(spd2);
     motor1.run(FORWARD);
     motor2.run(RELEASE);
-    delay(100);
+    delay(50);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
     delay (10);
@@ -312,7 +312,7 @@ void forward(int timedelay)
     motor2.setSpeed(spd2*1.25);
     motor1.run(FORWARD);
     motor2.run(RELEASE);
-    delay(100);
+    delay(50);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
     delay (10);
@@ -323,7 +323,7 @@ void forward(int timedelay)
     motor2.setSpeed(spd2);
     motor1.run(FORWARD);
     motor2.run(FORWARD);
-    delay(100);
+    delay(50);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
     delay (10);
@@ -332,7 +332,7 @@ void forward(int timedelay)
     motor2.setSpeed(spd2*1.25);
     motor1.run(RELEASE);
     motor2.run(FORWARD);
-    delay(100);
+    delay(50);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
     delay (10);
