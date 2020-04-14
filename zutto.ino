@@ -81,24 +81,24 @@ void RGB_Sensor()
 
   if (red >= 12 && red <= 24 && yellow >= 6 && yellow <= 18 && green >= 7 && green <= 18 && blue >= 2 && blue <= 12)
     {   RGB = 1; //station = 1 STARTTO
-      Serial.println("COLOR IS : BLUE 1");
+      //Serial.println("COLOR IS : BLUE 1");
     }
   else if (red >= 10 && red <= 20 && yellow >= 7 && yellow <= 16 && green >= 6 && green <= 16 && blue >= 10 && blue <= 19)
     {   RGB = 2; //station = 2
-      Serial.println("COLOR IS : GREEN 2");
+      //Serial.println("COLOR IS : GREEN 2");
     } 
   else if (red >= 4 && red <= 11 && yellow >= 6 && yellow <= 14 && green >= 6 && green <= 14 && blue >= 8 && blue <= 18)
     {   RGB = 3; //station = 3
-      Serial.println("COLOR IS : YELLOW 3");
+      //Serial.println("COLOR IS : YELLOW 3");
     } 
 
   else if (red >= 6 && red <= 15 && yellow >= 25 && yellow <= 35 && green >= 25 && green <= 35 && blue >= 18 && blue <= 28)
-    {   RGB = 4; //station XxX
-      Serial.println("COLOR IS : RED 4");
+    {   RGB = 3; //station XxX
+      //Serial.println("COLOR IS : RED 4");
     } 
   else{
     RGB = 0;
-    Serial.println(" IDK!"); 
+    //Serial.println(" IDK!"); 
      
   }
   delay(1000); 
