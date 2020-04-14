@@ -1,6 +1,9 @@
 #include<AFMotor.h>
+#include <Servo.h>
+
 AF_DCMotor motor1(3);
 AF_DCMotor motor2(4); //right motor
+Servo servo_test;
 
 int spd1 = 130;
 int spd2 = 130;
@@ -37,7 +40,6 @@ int RGB=0;
 int a;
 
 const int Buzzer = 31;
-Servo servo_test;
 
 const int trigPin = 36;
 const int echoPin = 38;
