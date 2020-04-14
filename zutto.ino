@@ -120,7 +120,7 @@ void RGB_Sensor()
 
 void control(){
     inputDIGITAL();
-    
+  /*  
     if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
       RGB_Sensor();
       a=digitalRead(Object_Sensor);
@@ -202,7 +202,8 @@ void control(){
       }
 
     }
-/*
+--------------------
+
       if(sensorValue6 == 1){ //right sensor detected
         if(RGB>=1){
           if(RGB == 1 ){
@@ -235,11 +236,11 @@ void control(){
 
     */
     else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        forward(1);
+        forward(200);
     else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-        forward(1);
+        forward(200);
     else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        forward(1);
+        forward(200);
 
     else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
         turnLeft();
@@ -295,7 +296,7 @@ void forward(int timedelay)
     delay(timedelay/2);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
-    delay(timedelay);
+    delay(10);
 }
   void turnRight() {
     motor1.setSpeed(spd1);
@@ -314,6 +315,7 @@ void forward(int timedelay)
     delay(100);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
+    delay (10);
   
   }
   void turnLeft() {
