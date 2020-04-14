@@ -277,6 +277,76 @@ void inputDIGITAL() {
   sensorValue0 = digitalRead(sensorPin0);
   sensorValue6 = digitalRead(sensorPin6);
 }
+void forward(int timedelay) 
+{
+    motor1.setSpeed(spd1);
+    motor2.setSpeed(spd2);
+    motor1.run(FORWARD);
+    motor2.run(FORWARD);
+    delay(timedelay);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay (10);
+    
+    motor1.setSpeed(spd1*1.25);
+    motor2.setSpeed(spd2*1.25);
+    motor1.run(FORWARD);
+    motor2.run(FORWARD);
+    delay (10);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay(timedelay/2);
+}
+  void turnRight() {
+    motor1.setSpeed(spd1);
+    motor2.setSpeed(spd2);
+    motor1.run(FORWARD);
+    motor2.run(RELEASE);
+    delay(100);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay (10);
+
+    motor1.setSpeed(spd1*1.25);
+    motor2.setSpeed(spd2*1.25);
+    motor1.run(FORWARD);
+    motor2.run(RELEASE);
+    delay(100);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+  
+  }
+  void turnLeft() {
+    motor1.setSpeed(spd1);
+    motor2.setSpeed(spd2);
+    motor1.run(FORWARD);
+    motor2.run(FORWARD);
+    delay(100);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay (10);
+
+    motor1.setSpeed(spd1*1.25);
+    motor2.setSpeed(spd2*1.25);
+    motor1.run(RELEASE);
+    motor2.run(FORWARD);
+    delay(100);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay (10);
+  }
+void backward(){
+   motor1.setSpeed(100);
+   motor2.setSpeed(100);
+   motor1.run(BACKWARD);  
+   motor2.run(BACKWARD); 
+   delay(80);
+   motor1.run(RELEASE);  
+   motor2.run(RELEASE);
+   delay (10);
+}
+
+/*
 void forward(int timedelay) {
   motor1.setSpeed(spd1);
   motor2.setSpeed(spd2);
@@ -350,7 +420,7 @@ void backward(int timedelay){
   delay (10);
   Serial.println("BACKWARD");
 }
-
+*/
 /*----------------------------------------------------Signal-------------------------------------*/
 
 int angle=0;
