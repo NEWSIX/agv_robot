@@ -34,8 +34,12 @@ int blue = 0;
 int yellow = 0;  
 int RGB=0;
 
-int station = 0 ;
 int a;
+
+const int Buzzer = 31;
+
+const int trigPin = 36;
+const int echoPin = 38;
     
 void setup()   
 {  
@@ -59,6 +63,11 @@ void setup()
   digitalWrite(s0, HIGH);  
   digitalWrite(s1, HIGH);  
 
+  pinMode(Buzzer, OUTPUT);
+  servo_test.attach(10);
+
+  pinMode(trigPin, OUTPUT); 
+  pinMode(echoPin, INPUT);
 }  
     
 void loop() 
@@ -117,17 +126,19 @@ void control(){
       if(sensorValue0 == 1){ // left sensor
         if(a==0){// object detected
           if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
-          //signal(); 
+          signal(); 
           Serial.println(" STATION : 1 (STARTTO) ");  
           }
           else { // other colors 
-            //signal();
+            signal();
             delay(5000);
+            signal2();
             forward(1000);
           }
         }
         if(a==1){// object non detected
-          //signal(); //4 know this ready
+          signal(); //get ready
+          delay(100);
         }
       }
 
@@ -135,19 +146,24 @@ void control(){
         if(a==0){// object detected
           if(RGB == 2 ){//color 2  ,stop w8 receive and signal
           Serial.println(" STATION : 2 ");  
-          //signal();
+          signal();
           delay(5000); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
+            signal2();
+            forward(1000);
+            }
+          if (a == 0){
+            signal();
+            delay(5000); //w8 receive 5sec 
+            signal2();
+            forward(1000);
+            }
+          }
+          else {
+            signal2();
             forward(1000);
           }
-          if (a == 0){
-            //signal();
-          }
-          delay(5000); //w8 receive 5sec 
-          forward(1000);
-          }
-          else forward(1000);
         }
         if(a==1){// object non detected
           forward(1000);
@@ -158,19 +174,24 @@ void control(){
         if(a==0){// object detected
           if(RGB == 3 ){//color 3  ,stop w8 receive and signal
           Serial.println(" STATION : 3 ");  
-          //signal();
+          signal();
           delay(5000); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
+            signal2();
+            forward(1000);
+            }
+          if (a == 0){
+            signal();
+            delay(5000); //w8 receive 5sec 
+            signal2();
+            forward(1000);
+            }
+          }
+          else {
+            signal2();
             forward(1000);
           }
-          if (a == 0){
-            //signal();
-          }
-          delay(5000); //w8 receive 5sec 
-          forward(1000);
-          }
-          else forward(1000);
         }
         if(a==1){// object non detected
           forward(1000);
@@ -325,6 +346,42 @@ void backward(int timedelay){
   motor2.run(RELEASE);
   delay (10);
   Serial.println("BACKWARD");
+}
+
+/*----------------------------------------------------Signal-------------------------------------*/
+
+int angle;
+
+void signal1(){
+BuzzLED();
+Servo_1();
+}
+void signal2(){
+BuzzLED();
+Servo_0();
+}
+
+void BuzzLED(){ 
+  digitalWrite(Buzzer, HIGH);
+  for (int i = 0; i < 2; i++) {
+    digitalWrite(Buzzer,LOW);
+    delay(100);
+    digitalWrite(Buzzer,HIGH);
+    delay(50);
+   }
+}
+
+void Servo_0(){
+//  for(angle = 90; angle>=1; angle--){                                
+      servo_test.write(0);
+//      delay(5);                       
+//    } 
+}
+void Servo_1(){
+  for(angle = 0; angle < 90; angle ++){                                
+    servo_test.write(angle);
+    delay(5);                       
+    } 
 }
 
 /*----------------------------------------------------XXXX-------------------------------------*/
