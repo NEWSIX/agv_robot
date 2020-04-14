@@ -129,18 +129,18 @@ void control(){
       if(sensorValue0 == 1){ // left sensor
         if(a==0){// object detected
           if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
-          signal(); 
+          signal1(); 
           Serial.println(" STATION : 1 (STARTTO) ");  
           }
           else { // other colors 
-            signal();
+            signal1();
             delay(5000);
             signal2();
             forward(1000);
           }
         }
         if(a==1){// object non detected
-          signal(); //get ready
+          signal1(); //get ready
           delay(100);
         }
       }
@@ -149,7 +149,7 @@ void control(){
         if(a==0){// object detected
           if(RGB == 2 ){//color 2  ,stop w8 receive and signal
           Serial.println(" STATION : 2 ");  
-          signal();
+          signal1();
           delay(5000); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
@@ -157,7 +157,7 @@ void control(){
             forward(1000);
             }
           if (a == 0){
-            signal();
+            signal1();
             delay(5000); //w8 receive 5sec 
             signal2();
             forward(1000);
@@ -177,7 +177,7 @@ void control(){
         if(a==0){// object detected
           if(RGB == 3 ){//color 3  ,stop w8 receive and signal
           Serial.println(" STATION : 3 ");  
-          signal();
+          signal1();
           delay(5000); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
@@ -185,7 +185,7 @@ void control(){
             forward(1000);
             }
           if (a == 0){
-            signal();
+            signal1();
             delay(5000); //w8 receive 5sec 
             signal2();
             forward(1000);
