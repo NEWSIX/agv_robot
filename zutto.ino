@@ -225,8 +225,8 @@ void turnRight(int timedelay) {
   motor2.run(RELEASE);
   delay (10);
 
-  motor1.setSpeed(spd1);
-  motor2.setSpeed(spd2*1.25);
+  motor1.setSpeed(spd1*1.25);
+  motor2.setSpeed(spd2*1.5);
   motor1.run(FORWARD);
   motor2.run(RELEASE);
   delay(50);
@@ -245,8 +245,8 @@ void turnLeft(int timedelay) {
   motor2.run(RELEASE);
   delay (10);
 
-  motor1.setSpeed(spd1*1.25);
-  motor2.setSpeed(spd2);
+  motor1.setSpeed(spd1*1.5);
+  motor2.setSpeed(spd2*1.25);
   motor1.run(RELEASE);
   motor2.run(FORWARD);
   delay(50);
