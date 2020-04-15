@@ -349,7 +349,13 @@ void Ultrasonic()
  Serial.println(distance);
  if (distance <= 10)
  {
-     George();
+   motor1.setSpeed(100);
+   motor2.setSpeed(100);
+   motor1.run(RELEASE);  
+   motor2.run(RELEASE);
+   delay (10);
+
+
      for (int i = 0; i < 2; i++) 
      {
         digitalWrite(Buzzer,LOW);
