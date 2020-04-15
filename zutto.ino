@@ -124,118 +124,6 @@ void control(){
   if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
     stationcompare();
     }
-
-
-/*
-
-      if(sensorValue0 == 1){ // left sensor
-        if(a==0){// object detected
-          if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
-          signal1(); 
-          //Serial.println(" STATION : 1 (STARTTO) ");  
-          }
-          else { // other colors 
-            signal1();
-            delay(5000);
-            signal2();
-            forward(200);
-          }
-        }
-        if(a==1){// object non detected
-          signal1(); //get ready
-          delay(100);
-        }
-      }
-
-      if(sensorValue6 == 1 && sensorValue0 == 1){ //L&R sensor detected
-        if(a==0){// object detected
-          if(RGB == 2 ){//color 2  ,stop w8 receive and signal
-          //Serial.println(" STATION : 2 ");  
-          signal1();
-          delay(5000); //w8 receive 5sec 
-          a=digitalRead(Object_Sensor);
-          if (a == 1){
-            signal2();
-            forward(100);
-            }
-          if (a == 0){
-            signal1();
-            delay(5000); //w8 receive 5sec 
-            signal2();
-            forward(100);
-            }
-          }
-          else {
-            signal2();
-            forward(100);
-          }
-        }
-        if(a==1){// object non detected
-          forward(100);
-        }
-      }
-
-      if(sensorValue6 == 1){ //L&R sensor detected
-        if(a==0){// object detected
-          if(RGB == 3 ){//color 3  ,stop w8 receive and signal
-         // Serial.println(" STATION : 3 ");  
-          signal1();
-          delay(5000); //w8 receive 5sec 
-          a=digitalRead(Object_Sensor);
-          if (a == 1){
-            signal2();
-            forward(200);
-            }
-          if (a == 0){
-            signal1();
-            delay(5000); //w8 receive 5sec 
-            signal2();
-            forward(200);
-            }
-          }
-          else {
-            signal2();
-            forward(200);
-          }
-        }
-        if(a==1){// object non detected
-          forward(200);
-        }
-      }
-
-    }
--------- line conditions------------
-
-      if(sensorValue6 == 1){ //right sensor detected
-        if(RGB>=1){
-          if(RGB == 1 ){
-            Serial.println(" STARTTO");  
-            delay(1000);
-            forward(1000);
-          }
-          if(RGB == 2 ){
-            Serial.println(" Station : 1");
-            delay(1000);
-            forward(1000);
-          }
-          if(RGB == 3){
-            Serial.println(" Station : 2");
-            delay(1000);
-            forward(1000);
-          }
-          if(RGB == 4){
-            Serial.println(" Station : 3"); 
-            delay(1000);
-            forward(1000);
-          }
-        }    
-        if(RGB<1){
-          Serial.println(" No Detected ");  
-          forward(1);
-        }
-      }
-    */
-
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
     forward(200);
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
@@ -502,11 +390,8 @@ void BuzzLED(){
    }
 }
 
-void Servo_0(){
-//  for(angle = 90; angle>=1; angle--){                                
+void Servo_0(){                             
       servo_test.write(0);
-//      delay(5);                       
-//    } 
 }
 void Servo_1(){
   for(angle = 0; angle < 90; angle ++){                                
