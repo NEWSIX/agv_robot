@@ -302,6 +302,7 @@ void stationcompare(){
       if(RGB == 0){
         forward(500);
         newsix=newsix+1;
+      }
       if(a==0){// object detected
         if(RGB == 2){
           signal1();
@@ -337,6 +338,7 @@ void stationcompare(){
       if(RGB == 0){
         forward(500);
         newsix=newsix+1;
+      }
       if(a==0){// object detected
         if(RGB == 3){
           signal1();
