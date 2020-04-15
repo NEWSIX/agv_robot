@@ -332,7 +332,7 @@ void stationcompare(){
           }  
         } 
 
-        if (newsix == 1 ){
+        else if (newsix == 1 ){
           if(a==0){// object detected
             if(RGB == 2){
               signal1();
@@ -362,7 +362,7 @@ void stationcompare(){
           }  
         }
 
-        if (newsix == 2 ){
+        else if (newsix == 2 ){
           if(a==0){// object detected
             if(RGB == 3){
               signal1();
@@ -392,7 +392,7 @@ void stationcompare(){
           }  
         }
 
-        if (newsix == 3 ){
+        else if (newsix == 3 ){
           if(a==0){// object detected
             if(RGB == 4){
               signal1();
@@ -420,6 +420,9 @@ void stationcompare(){
             forward(500);
             newsix=newsix+1;
           }  
+        }
+        else {
+          forward(200);
         }
       }
 }
