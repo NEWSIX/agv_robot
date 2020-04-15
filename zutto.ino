@@ -38,9 +38,9 @@ int yellow = 0;
 int RGB=0;
 
 int a;
+int newsix=0;
 
-const int Buzzer ;//31
-
+const int Buzzer = 31;
 const int trigPin = 36;
 const int echoPin = 38;
     
@@ -74,7 +74,7 @@ void setup()
 }  
     
 void loop() 
-{  
+{
 control();
 }  
 
@@ -105,7 +105,7 @@ void RGB_Sensor()
     } 
 
   else if (red >= 6 && red <= 15 && yellow >= 25 && yellow <= 35 && green >= 25 && green <= 35 && blue >= 18 && blue <= 28)
-    {   RGB = 3; //station XxX
+    {   RGB = 4; //station XxX
       //Serial.println("COLOR IS : RED 4");
     } 
   else{
@@ -119,18 +119,20 @@ void RGB_Sensor()
    
 
 void control(){
-    inputDIGITAL();
-  /*  
-    if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
-      RGB_Sensor();
-      a=digitalRead(Object_Sensor);
-      delay(50);
+  inputDIGITAL();
+  
+  if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
+    stationcompare();
+    }
+
+
+/*
 
       if(sensorValue0 == 1){ // left sensor
         if(a==0){// object detected
           if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
           signal1(); 
-          Serial.println(" STATION : 1 (STARTTO) ");  
+          //Serial.println(" STATION : 1 (STARTTO) ");  
           }
           else { // other colors 
             signal1();
@@ -148,7 +150,7 @@ void control(){
       if(sensorValue6 == 1 && sensorValue0 == 1){ //L&R sensor detected
         if(a==0){// object detected
           if(RGB == 2 ){//color 2  ,stop w8 receive and signal
-          Serial.println(" STATION : 2 ");  
+          //Serial.println(" STATION : 2 ");  
           signal1();
           delay(5000); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
@@ -176,7 +178,7 @@ void control(){
       if(sensorValue6 == 1){ //L&R sensor detected
         if(a==0){// object detected
           if(RGB == 3 ){//color 3  ,stop w8 receive and signal
-          Serial.println(" STATION : 3 ");  
+         // Serial.println(" STATION : 3 ");  
           signal1();
           delay(5000); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
@@ -202,7 +204,7 @@ void control(){
       }
 
     }
---------------------
+-------- line conditions------------
 
       if(sensorValue6 == 1){ //right sensor detected
         if(RGB>=1){
@@ -232,44 +234,163 @@ void control(){
           forward(1);
         }
       }
-    
-
     */
-    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        forward(200);
-    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-        forward(200);
-    else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        forward(200);
 
-    else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        turnLeft();
-    else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        turnLeft();
-    else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        turnLeft();
-    else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        turnLeft();
-    else if ((sensorValue1 == 0) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
-        turnLeft();
-        
-    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 1))
-        turnRight();
-    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-        turnRight();  
-    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 0))
-        turnRight();
-    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 0))
-        turnRight();
-    else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 0))
-        turnRight();
-
-    else
-        backward();
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    forward(200);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
+    forward(200);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    forward(200);
+    
+  
+  else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    turnLeft(1);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    turnLeft(1);
+  else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    turnLeft(1);
+  else if ((sensorValue1 == 0) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    turnLeft(1);
+  else if ((sensorValue1 == 0) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    turnLeft(1);
+    
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 1))
+    turnRight(1);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
+    turnRight(1);  
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 0))
+    turnRight(1);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 0) && (sensorValue5 == 0))
+    turnRight(1);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 0))
+    turnRight(1);  
+  else
+    backward(100);
 }
 
+void stationcompare(){
+  RGB_Sensor();
+      a=digitalRead(Object_Sensor);
+      delay(50);
 
-void inputDIGITAL() {
+      if ((sensorValue0 == 1) && (sensorValue6 == 0)){
+        if(a==0){// object detected
+          if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
+          signal1();
+          delay(100);
+          //Serial.println(" STATION : 1 (STARTTO) ");  
+          }
+          else{ // other colors 
+            signal1();
+            delay(5000);
+            signal2();
+            forward(500);
+            newsix=0;
+          }
+        }
+        else if(a==1){// object non detected
+          newsix=-1;
+          signal1(); //get ready
+        }
+      }
+
+      else if ((sensorValue0 == 0) && (sensorValue6 == 1)){
+        //delay(1000);
+        if (newsix == 0 ){
+          if(a==0){// object detected
+            if(RGB == 2){
+              signal1();
+              delay(5000); //w8 receive 5sec 
+              a=digitalRead(Object_Sensor);
+              if (a == 1){
+                signal2();
+                forward(500);
+                newsix=newsix+1;
+                }
+              else if (a == 0){
+                signal1();
+                delay(5000); //w8 receive 5sec 
+                signal2();
+                forward(500);
+                newsix=newsix+1;
+                }
+            }
+            else {
+              forward(200);
+              newsix=newsix+1;
+            }
+          }
+          else if (a==0){// object non detected 
+            forward(200);
+            newsix=newsix+1;
+          }  
+        } 
+
+        if (newsix == 1 ){
+          if(a==0){// object detected
+            if(RGB == 3){
+              signal1();
+              delay(5000); //w8 receive 5sec 
+              a=digitalRead(Object_Sensor);
+              if (a == 1){
+                signal2();
+                forward(500);
+                newsix=newsix+1;
+                }
+              else if (a == 0){
+                signal1();
+                delay(5000); //w8 receive 5sec 
+                signal2();
+                forward(500);
+                newsix=newsix+1;
+                }
+            }
+            else {
+              forward(200);
+              newsix=newsix+1;
+            }
+          }
+          else if (a==0){// object non detected 
+            forward(200);
+            newsix=newsix+1;
+          }  
+        }
+
+        if (newsix == 3 ){
+          if(a==0){// object detected
+            if(RGB == 4){
+              signal1();
+              delay(5000); //w8 receive 5sec 
+              a=digitalRead(Object_Sensor);
+              if (a == 1){
+                signal2();
+                forward(500);
+                newsix=newsix+1;
+                }
+              else if (a == 0){
+                signal1();
+                delay(5000); //w8 receive 5sec 
+                signal2();
+                forward(500);
+                newsix=newsix+1;
+                }
+            }
+            else {
+              forward(200);
+              newsix=newsix+1;
+            }
+          }
+          else if (a==0){// object non detected 
+            forward(200);
+            newsix=newsix+1;
+          }  
+        }
+      }
+}
+
+void inputDIGITAL(){
+  digitalWrite(Buzzer, HIGH);
   sensorValue1 = digitalRead(sensorPin1);
   sensorValue2 = digitalRead(sensorPin2);
   sensorValue3 = digitalRead(sensorPin3);
@@ -278,77 +399,6 @@ void inputDIGITAL() {
   sensorValue0 = digitalRead(sensorPin0);
   sensorValue6 = digitalRead(sensorPin6);
 }
-void forward(int timedelay) 
-{
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2);
-    motor1.run(FORWARD);
-    motor2.run(FORWARD);
-    delay(timedelay);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (10);
-    
-    motor1.setSpeed(spd1*1.25);
-    motor2.setSpeed(spd2*1.25);
-    motor1.run(FORWARD);
-    motor2.run(FORWARD);
-    delay(timedelay/2);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay(10);
-}
-  void turnRight() {
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2);
-    motor1.run(FORWARD);
-    motor2.run(RELEASE);
-    delay(50);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (10);
-
-    motor1.setSpeed(spd1*1.25);
-    motor2.setSpeed(spd2*1.25);
-    motor1.run(FORWARD);
-    motor2.run(RELEASE);
-    delay(50);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (10);
-  
-  }
-  void turnLeft() {
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2);
-    motor1.run(FORWARD);
-    motor2.run(FORWARD);
-    delay(50);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (10);
-
-    motor1.setSpeed(spd1*1.25);
-    motor2.setSpeed(spd2*1.25);
-    motor1.run(RELEASE);
-    motor2.run(FORWARD);
-    delay(50);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (10);
-  }
-void backward(){
-   motor1.setSpeed(100);
-   motor2.setSpeed(100);
-   motor1.run(BACKWARD);  
-   motor2.run(BACKWARD); 
-   delay(80);
-   motor1.run(RELEASE);  
-   motor2.run(RELEASE);
-   delay (10);
-}
-
-/*
 void forward(int timedelay) {
   motor1.setSpeed(spd1);
   motor2.setSpeed(spd2);
@@ -357,72 +407,58 @@ void forward(int timedelay) {
   delay(timedelay);
   motor1.run(RELEASE);  
   motor2.run(RELEASE);
-  delay (10);
-  
-  motor1.setSpeed(spd1*1.25);
-  motor2.setSpeed(spd2*1.25);
-  motor1.run(FORWARD);
-  motor2.run(FORWARD);
-  delay(timedelay/2);
-  motor1.run(RELEASE);  
-  motor2.run(RELEASE);
-  delay(10);
-  Serial.println("FORWARD");
+  delay(100);
 }
-
-void turnRight(int timedelay) {
-  motor1.setSpeed(spd1);
-  motor2.setSpeed(spd2*1.25);
-  motor1.run(FORWARD);
-  motor2.run(FORWARD);
-  delay(timedelay);
-  motor1.run(RELEASE);  
-  motor2.run(RELEASE);
-  delay (10);
-
-  motor1.setSpeed(spd1*1.25);
-  motor2.setSpeed(spd2*1.5);
-  motor1.run(FORWARD);
-  motor2.run(FORWARD);
-  delay(timedelay/2);
-  motor1.run(RELEASE);  
-  motor2.run(RELEASE);
-  delay (10);
-  Serial.println("TURNRIGHT");
+  void turnRight(int timedelay) {
+    motor1.setSpeed(spd1);
+    motor2.setSpeed(spd2);
+    motor1.run(FORWARD);
+    motor2.run(RELEASE);
+    delay(50);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay (50);
+    motor1.setSpeed(spd1*1.25);
+    motor2.setSpeed(spd2);
+    motor1.run(FORWARD);
+    motor2.run(FORWARD);
+    delay(50);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay (20);
   }
-void turnLeft(int timedelay) {
-  motor1.setSpeed(spd1*1.25);
-  motor2.setSpeed(spd2);
-  motor1.run(FORWARD);
-  motor2.run(FORWARD);
-  delay(timedelay);
-  motor1.run(RELEASE);  
-  motor2.run(RELEASE);
-  delay (10);
-
-  motor1.setSpeed(spd1*1.5);
-  motor2.setSpeed(spd2*1.25);
-  motor1.run(FORWARD);
-  motor2.run(FORWARD);
-  delay(timedelay/2);
-  motor1.run(RELEASE);  
-  motor2.run(RELEASE);
-  delay (10);
-
-  Serial.println("TURNLEFT");
+  void turnLeft(int timedelay) {
+    motor1.setSpeed(spd1);
+    motor2.setSpeed(spd2);
+    motor1.run(RELEASE);
+    motor2.run(FORWARD);
+    delay(50);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay (50);
+    motor1.setSpeed(spd1);
+    motor2.setSpeed(spd2*1.25);
+    motor1.run(FORWARD);
+    motor2.run(FORWARD);
+    delay(50);
+    motor1.run(RELEASE);  
+    motor2.run(RELEASE);
+    delay (20);
   }
 void backward(int timedelay){
-  motor1.setSpeed(spd1/1.25);
-  motor2.setSpeed(spd2/1.25);
-  motor1.run(BACKWARD);  
-  motor2.run(BACKWARD); 
-  delay(timedelay);
-  motor1.run(RELEASE);  
-  motor2.run(RELEASE);
-  delay (10);
-  Serial.println("BACKWARD");
+   motor1.setSpeed(spd1);
+   motor2.setSpeed(spd2);
+   motor1.run(RELEASE);  
+   motor2.run(RELEASE);
+   delay (20);
+   motor1.run(BACKWARD);  
+   motor2.run(BACKWARD); 
+   delay(50);
+   motor1.run(RELEASE);  
+   motor2.run(RELEASE);
+   delay (10);
 }
-*/
+
 /*----------------------------------------------------Signal-------------------------------------*/
 
 int angle=0;
@@ -438,7 +474,7 @@ Servo_0();
 
 void BuzzLED(){ 
   digitalWrite(Buzzer, HIGH);
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < newsix+1; i++) {
     digitalWrite(Buzzer,LOW);
     delay(100);
     digitalWrite(Buzzer,HIGH);
