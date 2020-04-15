@@ -302,6 +302,7 @@ void stationcompare(){
     //delay(1000);
     if (newsix == 1 ){
       RGB_Sensor();
+      a=digitalRead(Object_Sensor);
       Serial.print("newsix = ");
   Serial.print(newsix);
   Serial.print(" • RGB= ");
@@ -337,6 +338,7 @@ void stationcompare(){
 
     else if (newsix == 2 ){
       RGB_Sensor();
+      a=digitalRead(Object_Sensor);
       Serial.print("newsix = ");
   Serial.print(newsix);
   Serial.print(" • RGB= ");
@@ -372,6 +374,7 @@ void stationcompare(){
 
     else if (newsix == 3 ){
       RGB_Sensor();
+      a=digitalRead(Object_Sensor);
       Serial.print("newsix = ");
   Serial.print(newsix);
   Serial.print(" • RGB= ");
