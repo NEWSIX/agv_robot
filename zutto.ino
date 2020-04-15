@@ -40,7 +40,7 @@ int RGB=0;
 int a;
 int newsix=0;
 
-const int Buzzer = 31;
+const int Buzzer ;//= 31;
 const int trigPin = 36;
 const int echoPin = 38;
     
@@ -76,6 +76,7 @@ void setup()
 void loop() 
 {
 control();
+serial.println(newsix);
 }  
 
 /*----------------------------------------------------RGB-------------------------------------*/
@@ -317,12 +318,12 @@ void stationcompare(){
                 }
             }
             else {
-              forward(200);
+              forward(500);
               newsix=newsix+1;
             }
           }
           else if (a==0){// object non detected 
-            forward(200);
+            forward(500);
             newsix=newsix+1;
           }  
         } 
@@ -347,12 +348,12 @@ void stationcompare(){
                 }
             }
             else {
-              forward(200);
+              forward(500);
               newsix=newsix+1;
             }
           }
           else if (a==0){// object non detected 
-            forward(200);
+            forward(500);
             newsix=newsix+1;
           }  
         }
@@ -377,12 +378,12 @@ void stationcompare(){
                 }
             }
             else {
-              forward(200);
+              forward(500);
               newsix=newsix+1;
             }
           }
           else if (a==0){// object non detected 
-            forward(200);
+            forward(500);
             newsix=newsix+1;
           }  
         }
