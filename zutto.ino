@@ -275,126 +275,124 @@ void control(){
 
 void stationcompare(){
   RGB_Sensor();
+  a=digitalRead(Object_Sensor);
+  delay(50);
 
-      a=digitalRead(Object_Sensor);
-      delay(50);
+  if ((sensorValue0 == 1) && (sensorValue6 == 0)){
+    if(a==0){// object detected
+      if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
+      signal1();
+      delay(100);
+      //Serial.println(" STATION : 1 (STARTTO) ");  
+      }
+      else{ // other colors 
+        signal1();
+        delay(5000);
+        signal2();
+        forward(500);
+        newsix=1;
+      }
+    }
+    else if(a==1){// object non detected
+      signal1(); //get ready
+    }
+  }
 
-      if ((sensorValue0 == 1) && (sensorValue6 == 0)){
-        if(a==0){// object detected
-          if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
+  else if ((sensorValue0 == 0) && (sensorValue6 == 1)){
+    //delay(1000);
+    if (newsix == 1 ){
+      if(a==0){// object detected
+        if(RGB == 2){
           signal1();
-          delay(100);
-          //Serial.println(" STATION : 1 (STARTTO) ");  
-          }
-          else{ // other colors 
-            signal1();
-            delay(5000);
+          delay(5000); //w8 receive 5sec 
+          a=digitalRead(Object_Sensor);
+          if (a == 1){
             signal2();
             forward(500);
-            newsix=1;
-          }
-        }
-        else if(a==1){// object non detected
-          newsix=-1;
-          signal1(); //get ready
-        }
-      }
-
-      else if ((sensorValue0 == 0) && (sensorValue6 == 1)){
-        //delay(1000);
-        if (newsix == 1 ){
-          if(a==0){// object detected
-            if(RGB == 2){
-              signal1();
-              delay(5000); //w8 receive 5sec 
-              a=digitalRead(Object_Sensor);
-              if (a == 1){
-                signal2();
-                forward(500);
-                newsix=newsix+1;
-                }
-              else if (a == 0){
-                signal1();
-                delay(5000); //w8 receive 5sec 
-                signal2();
-                forward(500);
-                newsix=newsix+1;
-                }
+            newsix=newsix+1;
             }
-            else {
-              forward(500);
-              newsix=newsix+1;
-            }
-          }
-          else if (a==0){// object non detected 
+          else if (a == 0){
+            signal1();
+            delay(5000); //w8 receive 5sec 
+            signal2();
             forward(500);
             newsix=newsix+1;
-          }  
-        } 
-
-        else if (newsix == 2 ){
-          if(a==0){// object detected
-            if(RGB == 3){
-              signal1();
-              delay(5000); //w8 receive 5sec 
-              a=digitalRead(Object_Sensor);
-              if (a == 1){
-                signal2();
-                forward(500);
-                newsix=newsix+1;
-                }
-              else if (a == 0){
-                signal1();
-                delay(5000); //w8 receive 5sec 
-                signal2();
-                forward(500);
-                newsix=newsix+1;
-                }
             }
-            else {
-              forward(500);
-              newsix=newsix+1;
-            }
-          }
-          else if (a==0){// object non detected 
-            forward(500);
-            newsix=newsix+1;
-          }  
-        }
-
-        else if (newsix == 3 ){
-          if(a==0){// object detected
-            if(RGB == 4){
-              signal1();
-              delay(5000); //w8 receive 5sec 
-              a=digitalRead(Object_Sensor);
-              if (a == 1){
-                signal2();
-                forward(500);
-                newsix=newsix+1;
-                }
-              else if (a == 0){
-                signal1();
-                delay(5000); //w8 receive 5sec 
-                signal2();
-                forward(500);
-                newsix=newsix+1;
-                }
-            }
-            else {
-              forward(500);
-              newsix=newsix+1;
-            }
-          }
-          else if (a==0){// object non detected 
-            forward(500);
-            newsix=newsix+1;
-          }  
         }
         else {
-          forward(200);
+          forward(500);
+          newsix=newsix+1;
         }
       }
+      else if (a==0){// object non detected 
+        forward(500);
+        newsix=newsix+1;
+      }  
+    } 
+
+    else if (newsix == 2 ){
+      if(a==0){// object detected
+        if(RGB == 3){
+          signal1();
+          delay(5000); //w8 receive 5sec 
+          a=digitalRead(Object_Sensor);
+          if (a == 1){
+            signal2();
+            forward(500);
+            newsix=newsix+1;
+            }
+          else if (a == 0){
+            signal1();
+            delay(5000); //w8 receive 5sec 
+            signal2();
+            forward(500);
+            newsix=newsix+1;
+            }
+        }
+        else {
+          forward(500);
+          newsix=newsix+1;
+        }
+      }
+      else if (a==0){// object non detected 
+        forward(500);
+        newsix=newsix+1;
+      }  
+    }
+
+    else if (newsix == 3 ){
+      if(a==0){// object detected
+        if(RGB == 4){
+          signal1();
+          delay(5000); //w8 receive 5sec 
+          a=digitalRead(Object_Sensor);
+          if (a == 1){
+            signal2();
+            forward(500);
+            newsix=newsix+1;
+            }
+          else if (a == 0){
+            signal1();
+            delay(5000); //w8 receive 5sec 
+            signal2();
+            forward(500);
+            newsix=newsix+1;
+            }
+        }
+        else {
+          forward(500);
+          newsix=newsix+1;
+        }
+      }
+      else if (a==0){// object non detected 
+        forward(500);
+        newsix=newsix+1;
+      }  
+    }
+    else {
+      forward(200);
+    }
+  }
 }
 
 void inputDIGITAL(){
@@ -482,7 +480,7 @@ Servo_0();
 
 void BuzzLED(){ 
   digitalWrite(Buzzer, HIGH);
-  for (int i = 0; i < newsix+1; i++) {
+  for (int i = 0; i < newsix; i++) {
     digitalWrite(Buzzer,LOW);
     delay(100);
     digitalWrite(Buzzer,HIGH);
