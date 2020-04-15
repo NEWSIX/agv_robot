@@ -397,7 +397,7 @@ void stationcompare(){
             newsix=newsix+1;
             }
         }
-        else if(RGB == 0){
+        if(RGB == 0){
           forward(500);
           newsix=newsix+1;
         }
