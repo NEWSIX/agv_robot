@@ -21,8 +21,12 @@ int sensorValue5 = 0;
 int sensorValue0 = 0;
 int sensorValue6 = 0;
 
-void setup() {
+int Buzzer = 31;
+int newsix=0;
 
+void setup() {
+  pinMode(Buzzer, OUTPUT);
+  
   pinMode(INPUT, sensorPin1);
   pinMode(INPUT, sensorPin2);
   pinMode(INPUT, sensorPin3);
@@ -34,18 +38,40 @@ void setup() {
 }
 
 void loop() {
+   digitalWrite(Buzzer, HIGH);
   inputDIGITAL();
   control();
 }
 
 void control() {
+  if ((sensorValue0 == 1) || (sensorValue6 == 1)){
+    digitalWrite(Buzzer, HIGH);
+  for (int i = 0; i < newsix; i++) 
+   {
+    digitalWrite(Buzzer,LOW);
+    delay(100);
+    digitalWrite(Buzzer,HIGH);
+    delay(50);
+   }
+     
+ if ((sensorValue0 == 1) && (sensorValue6 == 0)){
+    delay(1000);
+    forward(500);
+    newsix=0;
+  }
+  else if ((sensorValue0 == 0) && (sensorValue6 == 1)){
+    delay(1000);
+    forward(500);
+    newsix=newsix+1;
+  }
+  }
 
-if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    forward(1);
+  else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
+    forward(200);
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-    forward(1);
+    forward(200);
   else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    forward(1);
+    forward(200);
     
   
   else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
@@ -88,7 +114,7 @@ void forward(int timedelay) {
   motor2.setSpeed(spd2);
   motor1.run(FORWARD);
   motor2.run(FORWARD);
-  delay(200);
+  delay(timedelay);
   motor1.run(RELEASE);  
   motor2.run(RELEASE);
   delay(100);
