@@ -275,10 +275,6 @@ void stationcompare(){
 
   if ((sensorValue0 == 1) && (sensorValue6 == 0)){
     RGB_Sensor();
-  Serial.print("newsix = ");
-  Serial.print(newsix);
-  Serial.print(" • RGB= ");
-  Serial.println(RGB);
     if(a==0){// object detected
       if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
       signal1();
@@ -303,10 +299,9 @@ void stationcompare(){
     if (newsix == 1 ){
       RGB_Sensor();
       a=digitalRead(Object_Sensor);
-      Serial.print("newsix = ");
-  Serial.print(newsix);
-  Serial.print(" • RGB= ");
-  Serial.println(RGB);
+      if(RGB == 0){
+        forward(500);
+        newsix=newsix+1;
       if(a==0){// object detected
         if(RGB == 2){
           signal1();
@@ -339,10 +334,9 @@ void stationcompare(){
     else if (newsix == 2 ){
       RGB_Sensor();
       a=digitalRead(Object_Sensor);
-      Serial.print("newsix = ");
-  Serial.print(newsix);
-  Serial.print(" • RGB= ");
-  Serial.println(RGB);
+      if(RGB == 0){
+        forward(500);
+        newsix=newsix+1;
       if(a==0){// object detected
         if(RGB == 3){
           signal1();
@@ -375,14 +369,10 @@ void stationcompare(){
     else if (newsix == 3 ){
       RGB_Sensor();
       a=digitalRead(Object_Sensor);
-      Serial.print("newsix = ");
-  Serial.print(newsix);
-  Serial.print(" • RGB= ");
-  Serial.println(RGB);
       if(RGB == 0){
-          forward(500);
-          newsix=newsix+1;
-        }
+        forward(500);
+        newsix=newsix+1;
+      }
       if(a==0){// object detected
         if(RGB == 4){
           signal1();
