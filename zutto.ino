@@ -76,6 +76,10 @@ void setup()
 void loop() 
 {
 control();
+  Serial.print("newsix = ");
+  Serial.print(newsix);
+  Serial.print("RGB= ");
+  Serial.println(RGB);
 }  
 
 /*----------------------------------------------------RGB-------------------------------------*/
@@ -271,10 +275,6 @@ void control(){
 
 void stationcompare(){
   RGB_Sensor();
-  Serial.print("newsix = ");
-  Serial.print(newsix);
-  Serial.print("RGB= ");
-  Serial.println(RGB);
 
       a=digitalRead(Object_Sensor);
       delay(50);
