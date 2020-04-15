@@ -379,6 +379,10 @@ void stationcompare(){
   Serial.print(newsix);
   Serial.print(" • RGB= ");
   Serial.println(RGB);
+      if(RGB == 0){
+          forward(500);
+          newsix=newsix+1;
+        }
       if(a==0){// object detected
         if(RGB == 4){
           signal1();
@@ -396,10 +400,6 @@ void stationcompare(){
             forward(500);
             newsix=newsix+1;
             }
-        }
-        if(RGB == 0){
-          forward(500);
-          newsix=newsix+1;
         }
         else {
           forward(500);
