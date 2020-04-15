@@ -291,7 +291,7 @@ void stationcompare(){
             delay(5000);
             signal2();
             forward(500);
-            newsix=0;
+            newsix=1;
           }
         }
         else if(a==1){// object non detected
@@ -302,37 +302,7 @@ void stationcompare(){
 
       else if ((sensorValue0 == 0) && (sensorValue6 == 1)){
         //delay(1000);
-        if (newsix == 0 ){
-          if(a==0){// object detected
-            if(RGB == 1){
-              signal1();
-              delay(5000); //w8 receive 5sec 
-              a=digitalRead(Object_Sensor);
-              if (a == 1){
-                signal2();
-                forward(500);
-                newsix=newsix+1;
-                }
-              else if (a == 0){
-                signal1();
-                delay(5000); //w8 receive 5sec 
-                signal2();
-                forward(500);
-                newsix=newsix+1;
-                }
-            }
-            else {
-              forward(500);
-              newsix=newsix+1;
-            }
-          }
-          else if (a==0){// object non detected 
-            forward(500);
-            newsix=newsix+1;
-          }  
-        } 
-
-        else if (newsix == 1 ){
+        if (newsix == 1 ){
           if(a==0){// object detected
             if(RGB == 2){
               signal1();
@@ -360,7 +330,7 @@ void stationcompare(){
             forward(500);
             newsix=newsix+1;
           }  
-        }
+        } 
 
         else if (newsix == 2 ){
           if(a==0){// object detected
