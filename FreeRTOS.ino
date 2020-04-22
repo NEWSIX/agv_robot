@@ -130,6 +130,8 @@ void Ultrasonic(){
   distance = (duration/2) / 29.1;
   Serial.println(distance);
     if (distance <= 10){
+      motor1.run(RELEASE);  
+      motor2.run(RELEASE);
       BuzzLED();
     }
     else;
