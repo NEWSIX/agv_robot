@@ -82,6 +82,30 @@ void taskUltra(void *pvParameters)  {
     Ultrasonic(); 
       }
 }
+/*----------------------------------------------------Ultrasonic-------------------------------------*/
+void Ultrasonic() {
+  digitalWrite(trigPin,HIGH);
+  delay(5);
+  digitalWrite(trigPin,LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1;
+  Serial.println(distance);
+    if (distance <= 10){
+      BuzzLED();
+    }
+    else{
+    }
+}
+/*----------------------------------------------------BUZZER-------------------------------------*/
+void BuzzLED(){ 
+  digitalWrite(Buzzer, HIGH);
+  for (int i = 0; i < newsix; i++) {
+    digitalWrite(Buzzer,LOW);
+    delay(100);
+    digitalWrite(Buzzer,HIGH);
+    delay(50);
+  }
+}  
 
 void taskZutto(void *pvParameters)  
  {
@@ -152,7 +176,7 @@ void RGB_Sensor()
     //Serial.println(" IDK!"); 
      
   }
-  delay(1000); 
+  delay(100); 
     }
 /*----------------------------------------------------LINETRACKING-------------------------------------*/
    
