@@ -39,9 +39,9 @@ int blue = 0;
 int yellow = 0;  
 int RGB=0;
 
-int a,dt=0;
+int a,dt=0 ,t;
 int newsix=0;
-int mdelay=300 , w8 = 3000;
+int mdelay=200;
 
 
 const int Buzzer = 31;
@@ -56,7 +56,6 @@ int FIRST = 10;
 
 void taskUltra( void *pvParameters );
 void taskZutto( void *pvParameters );
-//void taskObject( void *pvParameters );
 void setup() {
   Serial.begin(9600);
   xTaskCreate(
@@ -72,14 +71,7 @@ void setup() {
     ,  128  
     ,  NULL
     ,  2  
-    ,  NULL );/*
-  xTaskCreate(
-    taskObject
-    ,  "task3"
-    ,  128  
-    ,  NULL
-    ,  2  
-    ,  NULL );*/
+    ,  NULL );
 vTaskStartScheduler();
 }
 void loop()
@@ -132,26 +124,7 @@ void taskZutto(void *pvParameters)
       }
   }
  }
-/*
-void taskObject(void *pvParameters)  {
-  (void) pvParameters;
-  pinMode(INPUT,Object_Sensor);
-  pinMode(INPUT, sensorPin0);
-  pinMode(INPUT, sensorPin6);
-   for (;;)
-    {
-      a=digitalRead(Object_Sensor); 
-      if (a==1){
-          if ((sensorValue0 == 1) && (sensorValue6 == 0))
-          {
-          }
-          else {
-            forward(200);
-          }
-      }
 
-    }
-}*/
 /*----------------------------------------------------Ultrasonic-------------------------------------*/
 void Ultrasonic(){
   
@@ -212,6 +185,7 @@ void RGB_Sensor()
   }
   vTaskDelay(100 / FIRST);
 }
+
 /*----------------------------------------------------LINETRACKING-------------------------------------*/
    
 
@@ -269,7 +243,7 @@ void stationcompare(){
       }
       else{ // other colors 
         signal1();
-        vTaskDelay(w8 / FIRST);
+        vTaskDelay(1000 / FIRST);
         signal2();
         forward(mdelay);
         newsix=1;
@@ -280,117 +254,98 @@ void stationcompare(){
     }
   }
 
+
   else if ((sensorValue0 == 0) && (sensorValue6 == 1)){
     if (newsix == 1 ){
       RGB_Sensor();
-      a=digitalRead(Object_Sensor);
       if(RGB == 0){
         forward(mdelay);
         newsix=newsix+1;
       }
-      if(a==0){// object detected
-        if(RGB == 2){
+      if(RGB == 2){
           signal1();
-          vTaskDelay(w8 / FIRST); //w8 receive 5sec 
-          a=digitalRead(Object_Sensor);
-          if (a == 1){
+          for(t=0 ;t<=1000;t++)
+          {
+            a=digitalRead(Object_Sensor);
+            if (a == 1)
+            {
+              break; 
+            }
+            else {
+              t=t+1;
+            }
+            vTaskDelay(1); 
+            BuzzLED();
+          }
             signal2();
             forward(mdelay);
-            newsix=newsix+1;
-            }
-          else if (a == 0){
-            signal1();
-            vTaskDelay(w8 / FIRST); //w8 receive 5sec 
-            signal2();
-            forward(mdelay);
-            newsix=newsix+1;
-            }
-        }
-        else {
-          forward(mdelay);
-          newsix=newsix+1;
-        }
+            newsix=newsix+1; 
       }
-      else if (a==0){// object non detected 
+      else {
         forward(mdelay);
         newsix=newsix+1;
-      }  
-    } 
+      }
+    }  
+     
 
     else if (newsix == 2 ){
       RGB_Sensor();
-      a=digitalRead(Object_Sensor);
-      if(RGB == 0){
-        forward(mdelay);
-        newsix=newsix+1;
-      }
-      if(a==0){// object detected
-        if(RGB == 3){
+      if(RGB == 3){
           signal1();
-          vTaskDelay(w8 / FIRST); //w8 receive 5sec 
-          a=digitalRead(Object_Sensor);
-          if (a == 1){
+          for(t=0 ;t<=1000;t++)
+          {
+            a=digitalRead(Object_Sensor);
+            if (a == 1)
+            {
+            break; 
+            }
+            else  {
+              t=t+1;
+              
+            }
+            vTaskDelay(1 / FIRST); 
+            BuzzLED();
+          }
             signal2();
             forward(mdelay);
-            newsix=newsix+1;
-            }
-          else if (a == 0){
-            signal1();
-            vTaskDelay(w8 / FIRST); //w8 receive 5sec 
-            signal2();
-            forward(mdelay);
-            newsix=newsix+1;
-            }
-        }
-        else {
-          forward(mdelay);
-          newsix=newsix+1;
-        }
+            newsix=newsix+1; 
       }
-      else if (a==0){// object non detected 
+      else {
         forward(mdelay);
         newsix=newsix+1;
-      }  
+      }
     }
 
     else if (newsix == 3 ){
       RGB_Sensor();
-      a=digitalRead(Object_Sensor);
-      if(RGB == 0){
-        forward(mdelay);
-        newsix=newsix+1;
-      }
-      if(a==0){// object detected
-        if(RGB == 4){
+      if(RGB == 4){
           signal1();
-          vTaskDelay(w8 / FIRST); //w8 receive 5sec 
-          a=digitalRead(Object_Sensor);
-          if (a == 1){
+          for(t=0 ;t<=1000;t++)
+          {
+            a=digitalRead(Object_Sensor);
+            if (a == 1)
+            {
+            break;  
+            }
+            else {
+              t=t+1;
+            }
+            vTaskDelay(1 / FIRST);
+            BuzzLED(); 
+          }
             signal2();
             forward(mdelay);
-            newsix=newsix+1;
-            }
-          else if (a == 0){
-            signal1();
-            vTaskDelay(w8 / FIRST); //w8 receive 5sec 
-            signal2();
-            forward(mdelay);
-            newsix=newsix+1;
-            }
-        }
-        else {
-          forward(mdelay);
-          newsix=newsix+1;
-        }
+            newsix=newsix+1; 
       }
-      else if (a==0){// object non detected 
+      else {
         forward(mdelay);
         newsix=newsix+1;
-      }  
+      }
     }
-    else {
-      forward(100);
+   else {
+      forward(mdelay);
     }
+   
   }
 }
 
@@ -489,13 +444,11 @@ void BuzzLED(){
 }  
 
 void Servo_0(){                              
-      servo_test.write(0);
+    servo_test.write(0);
     vTaskDelay(50 / FIRST);                      
 }
-void Servo_1(){
-  for(angle = 0; angle < 90; angle ++){                                
-    servo_test.write(angle);
-     vTaskDelay(50 / FIRST);                       
-    } 
+void Servo_1(){                              
+    servo_test.write(90);
+    vTaskDelay(50 / FIRST);                       
 }
 /*----------------------------------------------------XXXX-------------------------------------*/
