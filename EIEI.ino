@@ -4,7 +4,6 @@ const int trigPin = 36;
 const int echoPin = 38;
 long duration;
 int distance;
-
 // define two tasks for Blink & AnalogRead
 void TaskBlink( void *pvParameters );
 void TaskAnalogRead( void *pvParameters );
@@ -76,7 +75,7 @@ void Ultrasonic() {
 /*----------------------------------------------------BUZZER-------------------------------------*/
 void BuzzLED(){ 
   digitalWrite(Buzzer, HIGH);
-  for (int i = 0; i < newsix; i++) {
+  for (int i = 0; i < 2; i++) {
     digitalWrite(Buzzer,LOW);
     delay(100);
     digitalWrite(Buzzer,HIGH);
