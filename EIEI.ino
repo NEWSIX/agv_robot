@@ -2,6 +2,8 @@
 const int Buzzer = 31;
 const int trigPin = 36;
 const int echoPin = 38;
+long duration;
+int distance;
 
 // define two tasks for Blink & AnalogRead
 void TaskBlink( void *pvParameters );
