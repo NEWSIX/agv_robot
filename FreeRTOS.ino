@@ -48,6 +48,8 @@ const int trigPin = 36;
 const int echoPin = 38;
 long duration;
 int distance;
+
+int FIRST = 10;
 /*----------------------------------------------------DEFINE-------------------------------------*/
 
 void taskUltra( void *pvParameters );
@@ -122,7 +124,7 @@ void taskZutto(void *pvParameters)
 /*----------------------------------------------------Ultrasonic-------------------------------------*/
 void Ultrasonic(){
   digitalWrite(trigPin,HIGH);
-  vTaskDelay(50 / portTICK_PERIOD_MS);
+  vTaskDelay(50 / FIRST);
   digitalWrite(trigPin,LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = (duration/2) / 29.1;
@@ -168,7 +170,7 @@ void RGB_Sensor()
     //Serial.println(" IDK!"); 
      
   }
-  vTaskDelay(100 / portTICK_PERIOD_MS);
+  vTaskDelay(100 / FIRST);
 }
 /*----------------------------------------------------LINETRACKING-------------------------------------*/
    
@@ -215,19 +217,19 @@ void control(){
 
 void stationcompare(){
   a=digitalRead(Object_Sensor);
-  vTaskDelay(50 / portTICK_PERIOD_MS);
+  vTaskDelay(50 / FIRST);
 
   if ((sensorValue0 == 1) && (sensorValue6 == 0)){
     RGB_Sensor();
     if(a==0){// object detected
       if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
       signal1();
-      vTaskDelay(100 / portTICK_PERIOD_MS);
+      vTaskDelay(100 / FIRST);
       //Serial.println(" STATION : 1 (STARTTO) ");  
       }
       else{ // other colors 
         signal1();
-        vTaskDelay(5000 / portTICK_PERIOD_MS);
+        vTaskDelay(5000 / FIRST);
         signal2();
         forward(mdelay);
         newsix=1;
@@ -249,7 +251,7 @@ void stationcompare(){
       if(a==0){// object detected
         if(RGB == 2){
           signal1();
-          vTaskDelay(5000 / portTICK_PERIOD_MS); //w8 receive 5sec 
+          vTaskDelay(5000 / FIRST); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
@@ -258,7 +260,7 @@ void stationcompare(){
             }
           else if (a == 0){
             signal1();
-            vTaskDelay(5000 / portTICK_PERIOD_MS); //w8 receive 5sec 
+            vTaskDelay(5000 / FIRST); //w8 receive 5sec 
             signal2();
             forward(mdelay);
             newsix=newsix+1;
@@ -285,7 +287,7 @@ void stationcompare(){
       if(a==0){// object detected
         if(RGB == 3){
           signal1();
-          vTaskDelay(5000 / portTICK_PERIOD_MS); //w8 receive 5sec 
+          vTaskDelay(5000 / FIRST); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
@@ -294,7 +296,7 @@ void stationcompare(){
             }
           else if (a == 0){
             signal1();
-            vTaskDelay(5000 / portTICK_PERIOD_MS); //w8 receive 5sec 
+            vTaskDelay(5000 / FIRST); //w8 receive 5sec 
             signal2();
             forward(mdelay);
             newsix=newsix+1;
@@ -321,7 +323,7 @@ void stationcompare(){
       if(a==0){// object detected
         if(RGB == 4){
           signal1();
-          vTaskDelay(5000 / portTICK_PERIOD_MS); //w8 receive 5sec 
+          vTaskDelay(5000 / FIRST); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
@@ -330,7 +332,7 @@ void stationcompare(){
             }
           else if (a == 0){
             signal1();
-            vTaskDelay(5000 / portTICK_PERIOD_MS); //w8 receive 5sec 
+            vTaskDelay(5000 / FIRST); //w8 receive 5sec 
             signal2();
             forward(mdelay);
             newsix=newsix+1;
@@ -367,7 +369,7 @@ void forward(int timedelay) {
   motor2.setSpeed(spd2);
   motor1.run(FORWARD);
   motor2.run(FORWARD);
-  vTaskDelay(timedelay / portTICK_PERIOD_MS);
+  vTaskDelay(timedelay / FIRST);
   motor1.run(RELEASE);  
   motor2.run(RELEASE);
   delay(100);
@@ -377,49 +379,49 @@ void forward(int timedelay) {
     motor2.setSpeed(spd2);
     motor1.run(FORWARD);
     motor2.run(RELEASE);
-    vTaskDelay(50 / portTICK_PERIOD_MS);
+    vTaskDelay(50 / FIRST);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
-     vTaskDelay(50 / portTICK_PERIOD_MS);
+     vTaskDelay(50 / FIRST);
     motor1.setSpeed(spd1*1.25);
     motor2.setSpeed(spd2);
     motor1.run(FORWARD);
     motor2.run(FORWARD);
-     vTaskDelay(50 / portTICK_PERIOD_MS);
+     vTaskDelay(50 / FIRST);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
-     vTaskDelay(20 / portTICK_PERIOD_MS);
+     vTaskDelay(20 / FIRST);
   }
   void turnLeft(int timedelay) {
     motor1.setSpeed(spd1);
     motor2.setSpeed(spd2);
     motor1.run(RELEASE);
     motor2.run(FORWARD);
-     vTaskDelay(50 / portTICK_PERIOD_MS);
+     vTaskDelay(50 / FIRST);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
-     vTaskDelay(50 / portTICK_PERIOD_MS);
+     vTaskDelay(50 / FIRST);
     motor1.setSpeed(spd1);
     motor2.setSpeed(spd2*1.25);
     motor1.run(FORWARD);
     motor2.run(FORWARD);
-     vTaskDelay(50 / portTICK_PERIOD_MS);
+     vTaskDelay(50 / FIRST);
     motor1.run(RELEASE);  
     motor2.run(RELEASE);
-     vTaskDelay(20 / portTICK_PERIOD_MS);
+     vTaskDelay(20 / FIRST);
   }
 void backward(int timedelay){
    motor1.setSpeed(spd1);
    motor2.setSpeed(spd2);
    motor1.run(RELEASE);  
    motor2.run(RELEASE);
-    vTaskDelay(20 / portTICK_PERIOD_MS);
+    vTaskDelay(20 / FIRST);
    motor1.run(BACKWARD);  
    motor2.run(BACKWARD); 
-    vTaskDelay(50 / portTICK_PERIOD_MS);
+    vTaskDelay(50 / FIRST);
    motor1.run(RELEASE);  
    motor2.run(RELEASE);
-    vTaskDelay(10 / portTICK_PERIOD_MS);
+    vTaskDelay(10 / FIRST);
 }
 
 /*----------------------------------------------------Signal-------------------------------------*/
@@ -449,13 +451,13 @@ void BuzzLED(){
 void Servo_0(){
  for(angle = 90; angle>=1; angle--){                                
       servo_test.write(0);
-    vTaskDelay(50 / portTICK_PERIOD_MS);                      
+    vTaskDelay(50 / FIRST);                      
   } 
 }
 void Servo_1(){
   for(angle = 0; angle < 90; angle ++){                                
     servo_test.write(angle);
-     vTaskDelay(50 / portTICK_PERIOD_MS);                       
+     vTaskDelay(50 / FIRST);                       
     } 
 }
 /*----------------------------------------------------XXXX-------------------------------------*/
