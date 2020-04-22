@@ -7,6 +7,7 @@ Servo servo_test;
 
 int spd1 = 130;
 int spd2 = 130;
+
 const int sensorPin0 = 52;
 const int sensorPin1 = 48;
 const int sensorPin2 = 46;
@@ -26,8 +27,6 @@ int sensorValue6 = 0;
 
 int Object_Sensor = 33;
 
-s
-
 const int s0 = 51;  
 const int s1 = 49;  
 const int s2 = 45;  
@@ -41,8 +40,9 @@ int RGB=0;
 
 int a;
 int newsix=0;
+int mdelay=300;
 
-const int Buzzer ;//= 31;
+const int Buzzer = 31;
 const int trigPin = 36;
 const int echoPin = 38;
     
@@ -126,12 +126,13 @@ void control(){
   if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
     stationcompare();
     }
+    
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    forward(200);
+    forward(100);
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 0) && (sensorValue5 == 1))
-    forward(200);
+    forward(100);
   else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
-    forward(200);
+    forward(100);
     
   
   else if ((sensorValue1 == 1) && (sensorValue2 == 0) && (sensorValue3 == 1) && (sensorValue4 == 1) && (sensorValue5 == 1))
@@ -175,7 +176,7 @@ void stationcompare(){
         signal1();
         delay(5000);
         signal2();
-        forward(500);
+        forward(mdelay);
         newsix=1;
       }
     }
@@ -190,7 +191,7 @@ void stationcompare(){
       RGB_Sensor();
       a=digitalRead(Object_Sensor);
       if(RGB == 0){
-        forward(500);
+        forward(mdelay);
         newsix=newsix+1;
       }
       if(a==0){// object detected
@@ -200,24 +201,24 @@ void stationcompare(){
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
-            forward(500);
+            forward(mdelay);
             newsix=newsix+1;
             }
           else if (a == 0){
             signal1();
             delay(5000); //w8 receive 5sec 
             signal2();
-            forward(500);
+            forward(mdelay);
             newsix=newsix+1;
             }
         }
         else {
-          forward(500);
+          forward(mdelay);
           newsix=newsix+1;
         }
       }
       else if (a==0){// object non detected 
-        forward(500);
+        forward(mdelay);
         newsix=newsix+1;
       }  
     } 
@@ -226,7 +227,7 @@ void stationcompare(){
       RGB_Sensor();
       a=digitalRead(Object_Sensor);
       if(RGB == 0){
-        forward(500);
+        forward(mdelay);
         newsix=newsix+1;
       }
       if(a==0){// object detected
@@ -236,14 +237,14 @@ void stationcompare(){
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
-            forward(500);
+            forward(mdelay);
             newsix=newsix+1;
             }
           else if (a == 0){
             signal1();
             delay(5000); //w8 receive 5sec 
             signal2();
-            forward(500);
+            forward(mdelay);
             newsix=newsix+1;
             }
         }
@@ -253,7 +254,7 @@ void stationcompare(){
         }
       }
       else if (a==0){// object non detected 
-        forward(500);
+        forward(mdelay);
         newsix=newsix+1;
       }  
     }
@@ -262,7 +263,7 @@ void stationcompare(){
       RGB_Sensor();
       a=digitalRead(Object_Sensor);
       if(RGB == 0){
-        forward(500);
+        forward(mdelay);
         newsix=newsix+1;
       }
       if(a==0){// object detected
@@ -272,29 +273,29 @@ void stationcompare(){
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
-            forward(500);
+            forward(mdelay);
             newsix=newsix+1;
             }
           else if (a == 0){
             signal1();
             delay(5000); //w8 receive 5sec 
             signal2();
-            forward(500);
+            forward(mdelay);
             newsix=newsix+1;
             }
         }
         else {
-          forward(500);
+          forward(mdelay);
           newsix=newsix+1;
         }
       }
       else if (a==0){// object non detected 
-        forward(500);
+        forward(mdelay);
         newsix=newsix+1;
       }  
     }
     else {
-      forward(200);
+      forward(100);
     }
   }
 }
@@ -392,8 +393,11 @@ void BuzzLED(){
    }
 }
 
-void Servo_0(){                             
+void Servo_0(){
+//  for(angle = 90; angle>=1; angle--){                                
       servo_test.write(0);
+//      delay(5);                       
+//    } 
 }
 void Servo_1(){
   for(angle = 0; angle < 90; angle ++){                                
