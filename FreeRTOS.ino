@@ -6,8 +6,8 @@ AF_DCMotor motor1(3);
 AF_DCMotor motor2(4); //right motor
 Servo servo_test;
 
-int spd1 = 130;
-int spd2 = 130;
+int spd1 = 120;
+int spd2 = 120;
 
 const int sensorPin0 = 52;
 const int sensorPin1 = 48;
@@ -78,13 +78,15 @@ void loop()
 }
 void taskUltra(void *pvParameters)  {
   (void) pvParameters;
+  pinMode(INPUT,Object_Sensor);
   pinMode(Buzzer, OUTPUT);
   pinMode(trigPin, OUTPUT); 
   pinMode(echoPin, INPUT);
   servo_test.attach(10);
    for (;;)
     {
-      Ultrasonic(); 
+      Ultrasonic();
+      a=digitalRead(Object_Sensor); 
     }
 }
 
@@ -181,7 +183,7 @@ void control(){
   inputDIGITAL();
   
   if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
-    stationcompare();
+      stationcompare();
     }
     
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
@@ -225,9 +227,9 @@ void stationcompare(){
     RGB_Sensor();
     if(a==0){// object detected
       if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
-      signal1();
-      vTaskDelay(100 / FIRST);
-      //Serial.println(" STATION : 1 (STARTTO) ");  
+        signal1();
+        vTaskDelay(100 / FIRST);
+        //Serial.println(" STATION : 1 (STARTTO) ");  
       }
       else{ // other colors 
         signal1();
@@ -374,56 +376,56 @@ void forward(int timedelay) {
   vTaskDelay(timedelay / FIRST);
   motor1.run(RELEASE);  
   motor2.run(RELEASE);
-  delay(100);
+  vTaskDelay(100 / FIRST);
 }
   void turnRight(int timedelay) {
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2);
-    motor1.run(FORWARD);
-    motor2.run(RELEASE);
-    vTaskDelay(50 / FIRST);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-     vTaskDelay(50 / FIRST);
-    motor1.setSpeed(spd1*1.25);
-    motor2.setSpeed(spd2);
-    motor1.run(FORWARD);
-    motor2.run(FORWARD);
-     vTaskDelay(50 / FIRST);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-     vTaskDelay(20 / FIRST);
+  motor1.setSpeed(spd1);
+  motor2.setSpeed(spd2);
+  motor1.run(FORWARD);
+  motor2.run(RELEASE);
+  vTaskDelay(50 / FIRST);
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  vTaskDelay(50 / FIRST);
+  motor1.setSpeed(spd1*1.25);
+  motor2.setSpeed(spd2);
+  motor1.run(FORWARD);
+  motor2.run(FORWARD);
+  vTaskDelay(50 / FIRST);
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  vTaskDelay(20 / FIRST);
   }
   void turnLeft(int timedelay) {
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2);
-    motor1.run(RELEASE);
-    motor2.run(FORWARD);
-     vTaskDelay(50 / FIRST);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-     vTaskDelay(50 / FIRST);
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2*1.25);
-    motor1.run(FORWARD);
-    motor2.run(FORWARD);
-     vTaskDelay(50 / FIRST);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-     vTaskDelay(20 / FIRST);
+  motor1.setSpeed(spd1);
+  motor2.setSpeed(spd2);
+  motor1.run(RELEASE);
+  motor2.run(FORWARD);
+  vTaskDelay(50 / FIRST);
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  vTaskDelay(50 / FIRST);
+  motor1.setSpeed(spd1);
+  motor2.setSpeed(spd2*1.25);
+  motor1.run(FORWARD);
+  motor2.run(FORWARD);
+  vTaskDelay(50 / FIRST);
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  vTaskDelay(20 / FIRST);
   }
 void backward(int timedelay){
-   motor1.setSpeed(spd1);
-   motor2.setSpeed(spd2);
-   motor1.run(RELEASE);  
-   motor2.run(RELEASE);
-    vTaskDelay(20 / FIRST);
-   motor1.run(BACKWARD);  
-   motor2.run(BACKWARD); 
-    vTaskDelay(50 / FIRST);
-   motor1.run(RELEASE);  
-   motor2.run(RELEASE);
-    vTaskDelay(10 / FIRST);
+ motor1.setSpeed(spd1);
+ motor2.setSpeed(spd2);
+ motor1.run(RELEASE);  
+ motor2.run(RELEASE);
+ vTaskDelay(20 / FIRST);
+ motor1.run(BACKWARD);  
+ motor2.run(BACKWARD); 
+ vTaskDelay(50 / FIRST);
+ motor1.run(RELEASE);  
+ motor2.run(RELEASE);
+ vTaskDelay(10 / FIRST);
 }
 
 /*----------------------------------------------------Signal-------------------------------------*/
@@ -442,7 +444,7 @@ Servo_0();
 /*----------------------------------------------------BUZZER SERVO-------------------------------------*/
 void BuzzLED(){ 
   digitalWrite(Buzzer, HIGH);
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; newsix < 2; i++) {
     digitalWrite(Buzzer,LOW);
      vTaskDelay(1);
     digitalWrite(Buzzer,HIGH);
@@ -450,11 +452,9 @@ void BuzzLED(){
   }
 }  
 
-void Servo_0(){
- for(angle = 90; angle>=1; angle--){                                
+void Servo_0(){                              
       servo_test.write(0);
     vTaskDelay(50 / FIRST);                      
-  } 
 }
 void Servo_1(){
   for(angle = 0; angle < 90; angle ++){                                
