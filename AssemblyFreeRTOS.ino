@@ -45,6 +45,8 @@ int mdelay=300;
 const int Buzzer = 31;
 const int trigPin = 36;
 const int echoPin = 38;
+long duration;
+int distance;
 
 #include <Arduino_FreeRTOS.h> 
 //https://circuitdigest.com/microcontroller-projects/arduino-freertos-tutorial1-creating-freertos-task-to-blink-led-in-arduino-uno
