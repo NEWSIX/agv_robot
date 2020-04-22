@@ -1,3 +1,4 @@
+#include <Arduino_FreeRTOS.h> 
 #include<AFMotor.h>
 #include <Servo.h>
 
@@ -5,8 +6,8 @@ AF_DCMotor motor1(3);
 AF_DCMotor motor2(4); //right motor
 Servo servo_test;
 
-int spd1 = 130;
-int spd2 = 130;
+int spd1;
+int spd2;
 
 const int sensorPin0 = 52;
 const int sensorPin1 = 48;
@@ -38,9 +39,10 @@ int blue = 0;
 int yellow = 0;  
 int RGB=0;
 
-int a;
+int a,dt=0;
 int newsix=0;
-int mdelay=300;
+int mdelay=300 , w8 = 3000;
+
 
 const int Buzzer = 31;
 const int trigPin = 36;
@@ -48,12 +50,14 @@ const int echoPin = 38;
 long duration;
 int distance;
 
-#include <Arduino_FreeRTOS.h> 
-//https://circuitdigest.com/microcontroller-projects/arduino-freertos-tutorial1-creating-freertos-task-to-blink-led-in-arduino-uno
+int FIRST = 10;
+
+/*----------------------------------------------------DEFINE-------------------------------------*/
+
 void taskUltra( void *pvParameters );
 void taskZutto( void *pvParameters );
+//void taskObject( void *pvParameters );
 void setup() {
-  // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
   xTaskCreate(
     taskUltra
@@ -68,7 +72,14 @@ void setup() {
     ,  128  
     ,  NULL
     ,  2  
-    ,  NULL );
+    ,  NULL );/*
+  xTaskCreate(
+    taskObject
+    ,  "task3"
+    ,  128  
+    ,  NULL
+    ,  2  
+    ,  NULL );*/
 vTaskStartScheduler();
 }
 void loop()
@@ -76,72 +87,93 @@ void loop()
 }
 void taskUltra(void *pvParameters)  {
   (void) pvParameters;
+  pinMode(INPUT,Object_Sensor);
   pinMode(Buzzer, OUTPUT);
   pinMode(trigPin, OUTPUT); 
   pinMode(echoPin, INPUT);
+  servo_test.attach(10);
    for (;;)
-  {
-    Ultrasonic(); 
-      }
+    {
+      Ultrasonic();
+      a=digitalRead(Object_Sensor); 
+    }
 }
+
+void taskZutto(void *pvParameters)  
+ {
+  (void) pvParameters;
+  {   
+    pinMode(INPUT,Object_Sensor);
+  
+    pinMode(INPUT, sensorPin1);
+    pinMode(INPUT, sensorPin2);
+    pinMode(INPUT, sensorPin3);
+    pinMode(INPUT, sensorPin4);
+    pinMode(INPUT, sensorPin5);
+    pinMode(INPUT, sensorPin0);
+    pinMode(INPUT, sensorPin6);
+  
+    pinMode(s0, OUTPUT);  
+    pinMode(s1, OUTPUT);  
+    pinMode(s2, OUTPUT);  
+    pinMode(s3, OUTPUT);  
+    pinMode(out, INPUT);  
+    digitalWrite(s0, HIGH);  
+    digitalWrite(s1, HIGH);  
+  
+    pinMode(Buzzer, OUTPUT);
+    servo_test.attach(10);
+  
+    pinMode(trigPin, OUTPUT); 
+    pinMode(echoPin, INPUT); 
+    for (;;)
+      {
+        control();
+      }
+  }
+ }
+/*
+void taskObject(void *pvParameters)  {
+  (void) pvParameters;
+  pinMode(INPUT,Object_Sensor);
+  pinMode(INPUT, sensorPin0);
+  pinMode(INPUT, sensorPin6);
+   for (;;)
+    {
+      a=digitalRead(Object_Sensor); 
+      if (a==1){
+          if ((sensorValue0 == 1) && (sensorValue6 == 0))
+          {
+          }
+          else {
+            forward(200);
+          }
+      }
+
+    }
+}*/
 /*----------------------------------------------------Ultrasonic-------------------------------------*/
-void Ultrasonic() {
+void Ultrasonic(){
+  
   digitalWrite(trigPin,HIGH);
-  delay(5);
+  vTaskDelay(50 / FIRST);
   digitalWrite(trigPin,LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = (duration/2) / 29.1;
   Serial.println(distance);
     if (distance <= 10){
+      spd1=50;
+      spd2=50;
+      motor1.run(RELEASE);  
+      motor2.run(RELEASE);
       BuzzLED();
+
     }
-    else{
+    else {
+      spd1=130;
+      spd2=130;
     }
 }
-/*----------------------------------------------------BUZZER-------------------------------------*/
-void BuzzLED(){ 
-  digitalWrite(Buzzer, HIGH);
-  for (int i = 0; i < newsix; i++) {
-    digitalWrite(Buzzer,LOW);
-    delay(100);
-    digitalWrite(Buzzer,HIGH);
-    delay(50);
-  }
-}  
-
-void taskZutto(void *pvParameters)  
- {
-  (void) pvParameters;
-{   
-  pinMode(INPUT,Object_Sensor);
-
-  pinMode(INPUT, sensorPin1);
-  pinMode(INPUT, sensorPin2);
-  pinMode(INPUT, sensorPin3);
-  pinMode(INPUT, sensorPin4);
-  pinMode(INPUT, sensorPin5);
-  pinMode(INPUT, sensorPin0);
-  pinMode(INPUT, sensorPin6);
-
-  pinMode(s0, OUTPUT);  
-  pinMode(s1, OUTPUT);  
-  pinMode(s2, OUTPUT);  
-  pinMode(s3, OUTPUT);  
-  pinMode(out, INPUT);  
-  digitalWrite(s0, HIGH);  
-  digitalWrite(s1, HIGH);  
-
-  pinMode(Buzzer, OUTPUT);
-  servo_test.attach(10);
-
-  pinMode(trigPin, OUTPUT); 
-  pinMode(echoPin, INPUT); 
-  for (;;)
-    {
-      control();
-    }
- }
-
 
 /*----------------------------------------------------RGB-------------------------------------*/
 
@@ -178,8 +210,8 @@ void RGB_Sensor()
     //Serial.println(" IDK!"); 
      
   }
-  delay(100); 
-    }
+  vTaskDelay(100 / FIRST);
+}
 /*----------------------------------------------------LINETRACKING-------------------------------------*/
    
 
@@ -187,7 +219,7 @@ void control(){
   inputDIGITAL();
   
   if ((sensorValue0 == 1) || (sensorValue6 == 1)){ // detected station
-    stationcompare();
+      stationcompare();
     }
     
   else if ((sensorValue1 == 1) && (sensorValue2 == 1) && (sensorValue3 == 0) && (sensorValue4 == 1) && (sensorValue5 == 1))
@@ -225,19 +257,19 @@ void control(){
 
 void stationcompare(){
   a=digitalRead(Object_Sensor);
-  delay(50);
+  vTaskDelay(50 / FIRST);
 
   if ((sensorValue0 == 1) && (sensorValue6 == 0)){
     RGB_Sensor();
     if(a==0){// object detected
       if(RGB == 1 ){ //color 1 is start station  ,stop w8 for other color
-      signal1();
-      delay(100);
-      //Serial.println(" STATION : 1 (STARTTO) ");  
+        signal1();
+        vTaskDelay(100 / FIRST);
+        //Serial.println(" STATION : 1 (STARTTO) ");  
       }
       else{ // other colors 
         signal1();
-        delay(5000);
+        vTaskDelay(w8 / FIRST);
         signal2();
         forward(mdelay);
         newsix=1;
@@ -249,7 +281,6 @@ void stationcompare(){
   }
 
   else if ((sensorValue0 == 0) && (sensorValue6 == 1)){
-    //delay(1000);
     if (newsix == 1 ){
       RGB_Sensor();
       a=digitalRead(Object_Sensor);
@@ -260,7 +291,7 @@ void stationcompare(){
       if(a==0){// object detected
         if(RGB == 2){
           signal1();
-          delay(5000); //w8 receive 5sec 
+          vTaskDelay(w8 / FIRST); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
@@ -269,7 +300,7 @@ void stationcompare(){
             }
           else if (a == 0){
             signal1();
-            delay(5000); //w8 receive 5sec 
+            vTaskDelay(w8 / FIRST); //w8 receive 5sec 
             signal2();
             forward(mdelay);
             newsix=newsix+1;
@@ -296,7 +327,7 @@ void stationcompare(){
       if(a==0){// object detected
         if(RGB == 3){
           signal1();
-          delay(5000); //w8 receive 5sec 
+          vTaskDelay(w8 / FIRST); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
@@ -305,14 +336,14 @@ void stationcompare(){
             }
           else if (a == 0){
             signal1();
-            delay(5000); //w8 receive 5sec 
+            vTaskDelay(w8 / FIRST); //w8 receive 5sec 
             signal2();
             forward(mdelay);
             newsix=newsix+1;
             }
         }
         else {
-          forward(500);
+          forward(mdelay);
           newsix=newsix+1;
         }
       }
@@ -332,7 +363,7 @@ void stationcompare(){
       if(a==0){// object detected
         if(RGB == 4){
           signal1();
-          delay(5000); //w8 receive 5sec 
+          vTaskDelay(w8 / FIRST); //w8 receive 5sec 
           a=digitalRead(Object_Sensor);
           if (a == 1){
             signal2();
@@ -341,7 +372,7 @@ void stationcompare(){
             }
           else if (a == 0){
             signal1();
-            delay(5000); //w8 receive 5sec 
+            vTaskDelay(w8 / FIRST); //w8 receive 5sec 
             signal2();
             forward(mdelay);
             newsix=newsix+1;
@@ -378,59 +409,59 @@ void forward(int timedelay) {
   motor2.setSpeed(spd2);
   motor1.run(FORWARD);
   motor2.run(FORWARD);
-  delay(timedelay);
+  vTaskDelay(timedelay / FIRST);
   motor1.run(RELEASE);  
   motor2.run(RELEASE);
-  delay(100);
+  vTaskDelay(100 / FIRST);
 }
   void turnRight(int timedelay) {
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2);
-    motor1.run(FORWARD);
-    motor2.run(RELEASE);
-    delay(50);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (50);
-    motor1.setSpeed(spd1*1.25);
-    motor2.setSpeed(spd2);
-    motor1.run(FORWARD);
-    motor2.run(FORWARD);
-    delay(50);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (20);
+  motor1.setSpeed(spd1);
+  motor2.setSpeed(spd2);
+  motor1.run(FORWARD);
+  motor2.run(RELEASE);
+  vTaskDelay(50 / FIRST);
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  vTaskDelay(50 / FIRST);
+  motor1.setSpeed(spd1*1.25);
+  motor2.setSpeed(spd2);
+  motor1.run(FORWARD);
+  motor2.run(FORWARD);
+  vTaskDelay(50 / FIRST);
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  vTaskDelay(20 / FIRST);
   }
   void turnLeft(int timedelay) {
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2);
-    motor1.run(RELEASE);
-    motor2.run(FORWARD);
-    delay(50);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (50);
-    motor1.setSpeed(spd1);
-    motor2.setSpeed(spd2*1.25);
-    motor1.run(FORWARD);
-    motor2.run(FORWARD);
-    delay(50);
-    motor1.run(RELEASE);  
-    motor2.run(RELEASE);
-    delay (20);
+  motor1.setSpeed(spd1);
+  motor2.setSpeed(spd2);
+  motor1.run(RELEASE);
+  motor2.run(FORWARD);
+  vTaskDelay(50 / FIRST);
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  vTaskDelay(50 / FIRST);
+  motor1.setSpeed(spd1);
+  motor2.setSpeed(spd2*1.25);
+  motor1.run(FORWARD);
+  motor2.run(FORWARD);
+  vTaskDelay(50 / FIRST);
+  motor1.run(RELEASE);  
+  motor2.run(RELEASE);
+  vTaskDelay(20 / FIRST);
   }
 void backward(int timedelay){
-   motor1.setSpeed(spd1);
-   motor2.setSpeed(spd2);
-   motor1.run(RELEASE);  
-   motor2.run(RELEASE);
-   delay (20);
-   motor1.run(BACKWARD);  
-   motor2.run(BACKWARD); 
-   delay(50);
-   motor1.run(RELEASE);  
-   motor2.run(RELEASE);
-   delay (10);
+ motor1.setSpeed(spd1);
+ motor2.setSpeed(spd2);
+ motor1.run(RELEASE);  
+ motor2.run(RELEASE);
+ vTaskDelay(20 / FIRST);
+ motor1.run(BACKWARD);  
+ motor2.run(BACKWARD); 
+ vTaskDelay(50 / FIRST);
+ motor1.run(RELEASE);  
+ motor2.run(RELEASE);
+ vTaskDelay(10 / FIRST);
 }
 
 /*----------------------------------------------------Signal-------------------------------------*/
@@ -446,27 +477,25 @@ BuzzLED();
 Servo_0();
 }
 
+/*----------------------------------------------------BUZZER SERVO-------------------------------------*/
 void BuzzLED(){ 
   digitalWrite(Buzzer, HIGH);
-  for (int i = 0; i < newsix; i++) {
+  for (int i = 0; i < 2; i++) {
     digitalWrite(Buzzer,LOW);
-    delay(100);
+     vTaskDelay(1);
     digitalWrite(Buzzer,HIGH);
-    delay(50);
-   }
-}
+     vTaskDelay(0.5);
+  }
+}  
 
-void Servo_0(){
-//  for(angle = 90; angle>=1; angle--){                                
+void Servo_0(){                              
       servo_test.write(0);
-//      delay(5);                       
-//    } 
+    vTaskDelay(50 / FIRST);                      
 }
 void Servo_1(){
   for(angle = 0; angle < 90; angle ++){                                
     servo_test.write(angle);
-    delay(5);                       
+     vTaskDelay(50 / FIRST);                       
     } 
 }
-
 /*----------------------------------------------------XXXX-------------------------------------*/
