@@ -26,6 +26,8 @@ int sensorValue6 = 0;
 
 int Object_Sensor = 33;
 
+s
+
 const int s0 = 51;  
 const int s1 = 49;  
 const int s2 = 45;  
